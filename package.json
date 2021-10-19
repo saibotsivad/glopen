@@ -1,0 +1,44 @@
+{
+  "name": "glopen",
+  "version": "0.0.0",
+  "description": "GLobbify OPENapi: Glob a folder structure into an OpenAPI definition and API driver.",
+  "type": "module",
+  "module": "dist/index.mjs",
+  "unpkg": "dist/index.min.js",
+  "main": "dist/index.js",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "test": "uvu src",
+    "build": "bundt src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "openapi",
+    "glob",
+    "generator"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen",
+  "devDependencies": {
+    "bundt": "^1.1.5",
+    "uvu": "^0.5.2"
+  }
+}
