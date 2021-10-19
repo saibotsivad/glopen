@@ -1,0 +1,25 @@
+### Send POST request to create task
+POST http://localhost:3000/api/v1/tasks
+Content-Type: application/json
+
+{
+	"data": {
+		"type": "task",
+		"attributes": {
+			"completed": false
+		}
+	}
+}
+
+### Try creating a task with the "type" incorrect
+POST http://localhost:3000/api/v1/tasks
+Content-Type: application/json
+
+{
+	"data": {
+		"type": "user",
+		"attributes": {
+			"completed": false
+		}
+	}
+}
