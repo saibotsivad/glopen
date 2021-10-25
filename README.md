@@ -1,8 +1,10 @@
 # glopen
 
-GLobbify OPENapi: Glob a folder structure into an OpenAPI definition and API driver.
+GLobbify OPENapi: Glob folder structures into an OpenAPI definition and API driver.
 
 The basic idea is that you create a folder structure to represent the final OpenAPI object, with some very light sugar, and use that to both generate the OpenAPI definition file and drive the API.
+
+You can also merge multiple distinct folders together, into a single definition and driver, allowing API endpoint definitions to be published as discrete, reusable libraries.
 
 ## Install
 
@@ -14,31 +16,167 @@ npm install glopen
 
 ## Using
 
-As part of the build process, simply do:
+As part of the build process, for a single folder structure, simply do:
 
 ```shell
-glopen --api=./path/to/api/folder --out=./generated-file.js --suffix=@
+glopen --dir=./path/to/api/folder --out=./generated-file.js
 ```
 
-Available parameters:
+The `--out` flag is optional, if not set the code will print, so you could also do:
 
-- `api` *required* - The path to the API folder.
-- `out` *required* - The path+filename to write to.
-- `suffix` *optional* - The suffix used for auto-globbing. (Default: `@`)
+```shell
+glopen --dir=./path/to/api/folder > ./generated-file.js
+```
 
-Or use it in code:
+For multiple merged folder structures, you can use multiple `--json` parameters, with each being a JSON object, or an array of objects:
+
+```shell
+glopen --json='{ "dir": "./path1", "api": "/api/v1" }' \
+       --json='[ { "dir": "./path1", "api": "/api/v1" }, { "dir": "./path2", "api": "/api/v2" } ]' \
+       --out=./generated-file.js
+```
+
+To use it in code, pass in `{ merge: Array<Part> }`:
 
 ```js
 import { glopen } from 'glopen'
+import { writeFile } from 'node:fs/promises'
 
-const string = await glopen({
-	api: './path/to/api/folder',
-	out: './generated-file.js',
-	suffix: '@'
+const code = await glopen({
+	merge: [
+		{
+			dir: './path/to/api/folder',
+			api: '/api/v1/tasks',
+			ext: '@'
+		}
+	]
+})
+await writeFile('./generated-file.js', code, 'utf8')
+```
+
+You can also use the `--config` (or `-c` alias) to point to a JavaScript file that exports a config object:
+
+```js
+export default {
+	merge: [{
+		dir: './path/to/api/folder',
+		api: '/api/v1/tasks',
+		ext: '@'
+	}],
+	output: './generated-file.js'
+}
+```
+
+## Parts
+
+Whether used in code, or in any of the modes, each API "part" has these parameters:
+
+- `dir` *required* - The path to the API folder.
+- `api` *optional* - The API path to prefix to the folder, e.g. if the folder is `/tasks` and `prefix` is `/api/v1` the API path becomes `/api/v1/tasks`.
+- `ext` *optional* - The extension prefix used for auto-globbing, (Default: `@`, e.g. `get.@.js`)
+
+For example, given this folder structure:
+
+```
+/demo
+	/tasks
+		/get.@.js
+```
+
+If, at the root, you used `glopen --dir=./demo` the OpenAPI operation would be `GET /tasks`.
+
+However, if you used `glopen --dir=./demo --api=/v1` the OpenAPI operation would be `GET /v1/tasks`.
+
+## API `glopen({ merge: Array<Part> })`
+
+When used in code, the input is an object with a `merge` property, which is an ordered array of "part" objects.
+
+```js
+const code = await glopen({
+	merge: [
+		{
+			dir: './path/to/users',
+			api: '/api/v2/users',
+			ext: '@'
+		}
+	],
 })
 ```
 
-## What?
+## CLI
+
+The different modes (single, json, and config) are not mixable, you must pick one or the other.
+
+### Single Mode
+
+In single mode, a single "part" is passed in as CLI args:
+
+```shell
+glopen --api=./path/to/users \
+       --prefix=/api/v2/users \
+       --suffix=@
+```
+
+### JSON Mode
+
+In JSON mode, one or more "parts" are passed in as JSON strings, either as objects, arrays, or mixed:
+
+```shell
+glopen --json='{ "dir": "./path/to/users", "api": "/api/v2/users", "ext": "@" }' \
+       --json='[ { "dir": "./path/to/tasks", "api": "/api/v2/tasks", "ext": "$" }, { "dir": "./path/to/cars", "api": "/api/v1/cars", "ext": "@" } ]'
+```
+
+The order of all JSON inputs is preserved, so the above example would be the same as:
+
+```js
+await glopen({
+	merge: [
+		{
+			dir: './path/to/users',
+			api: '/api/v2/users',
+			ext: '@'
+		},
+		{
+			dir: './path/to/tasks',
+			api: '/api/v2/tasks',
+			ext: '$'
+		},
+		{
+			dir: './path/to/cars',
+			api: '/api/v1/cars',
+			ext: '$'
+		},
+	]
+})
+```
+
+### Config Mode
+
+Calling `glopen` with the `-c` or `--config` option will import the file specified, or `glopen.config.js` by default:
+
+```shell
+glopen -c # uses './glopen.config.js'
+# or
+glopen -c ./path/to/config.js
+```
+
+The config file must export a default object containing the following properties:
+
+- `merge: Array<Part>` *required* - An array of "parts", e.g. `dir`, `api`, `ext`.
+- `output: String` *optional* - The file path to write to.
+
+## Merge Order
+
+To be clear, all paths, components, and so on, will all be merged on top of each other, first to last. In other words, if there are overlapping paths, models, etc., the winning one will be the last.
+
+This copies the `Object.assign` order, e.g.:
+
+```js
+Object.assign({}, { a: 1 }, { a: 2 })
+// { a: 2 }
+```
+
+## Okay... Now What?
 
 For example, an OpenAPI definition with a single path might look like:
 
@@ -65,7 +203,7 @@ That translates to the folder+file structure:
 					/get.@.js
 ```
 
-Note that the `.@.js` suffix is configurable, but having it means that we can auto-glob the files together (the sugar) and put other files next to it, e.g.:
+Note that the `.@.js` suffix is configurable, but it means that we can auto-glob the files together (the sugar) and put other files next to it, e.g.:
 
 ```
 /paths

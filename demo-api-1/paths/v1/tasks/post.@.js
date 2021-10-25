@@ -1,4 +1,4 @@
-import { task as taskTag } from '../../../../tags.@.js'
+import { task as taskTag } from '../../../tags.@.js'
 
 export const summary = 'Create a task.'
 

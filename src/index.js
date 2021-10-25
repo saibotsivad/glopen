@@ -1,9 +1,11 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { dset } from 'dset'
 
 import tinyGlob from 'tiny-glob'
 import toJsIdentifier from 'to-js-identifier'
 
+const DEFAULT_EXTENSION_PREFIX = '@'
 const PATH_REPLACER = /{([^}]+)}/g
 const NAMES_WITH_NO_DEFAULT = [ '_', 'tags', 'info' ]
 const NAMES_REQUIRING_HANDLERS = [ 'get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace' ]
@@ -12,39 +14,45 @@ const quoteString = string => JSON.stringify(string)
 
 const relativeModuleName = (pathPrefix, file) => quoteString(path.join(pathPrefix, file))
 
-const loadMarkdownFile = directory => async file => fs
-	.readFile(path.join(directory, file), 'utf8')
-	.then(string => ({ file, string, id: toJsIdentifier(file) }))
+const loadMarkdownFile = async part => fs
+	.readFile(part.abs, 'utf8')
+	.then(string => Object.assign(part, { string }))
 
-const loadAllMarkdownFiles = async (directory, files) => Promise
-	.all(files.map(loadMarkdownFile(directory)))
+const loadAllMarkdownFiles = async files => Promise
+	.all(files.map(loadMarkdownFile))
 	.then(loaded => {
 		const markdownDetails = {}
 		const markdownImportLines = []
 		if (loaded.length) markdownImportLines.push('// imported markdown files')
-		for (const { file, id, string } of loaded) {
+		for (const { dir, file, id, string } of loaded) {
 			const parts = file.split('/')
 			const end = parts.pop()
 			const [ filename, accessor ] = end.split('.')
-			markdownDetails[[ ...parts, filename ].join('/')] = { accessor, id }
+			markdownDetails[[ dir, ...parts, filename ].join('/')] = { accessor, id }
 			markdownImportLines.push(`const ${id} = ${quoteString(string)}`)
 		}
 		if (loaded.length) markdownImportLines.push('')
 		return { markdownImportLines, markdownDetails }
 	})
 
-const generateImportLines = (pathPrefix, javascriptDetails) => {
+const generateImportLines = globbedJs => {
 	const importLines = [ '// imported javascript files' ]
-	for (const { file, name, id, path } of javascriptDetails) {
-		if (NAMES_WITH_NO_DEFAULT.includes(name)) importLines.push(`import * as ${id} from ${relativeModuleName(pathPrefix, file)}`)
-		else if (path.startsWith('paths/') && NAMES_REQUIRING_HANDLERS.includes(name)) importLines.push(`import ${id}_handler, * as ${id} from ${relativeModuleName(pathPrefix, file)}`)
-		else importLines.push(`import ${id} from ${relativeModuleName(pathPrefix, file)}`)
+	for (const part of globbedJs) {
+		const importName = quoteString(path.join(part.dir, part.file))
+		if (NAMES_WITH_NO_DEFAULT.includes(part.name)) importLines.push(`import * as ${part.id} from ${importName}`)
+		else if (part.path.startsWith('paths/') && NAMES_REQUIRING_HANDLERS.includes(part.name)) importLines.push(`import ${part.id}_handler, * as ${part.id} from ${importName}`)
+		else importLines.push(`import ${part.id} from ${importName}`)
 	}
 	importLines.push('')
 	return importLines
 }
 
-const keyBy = (list, key) => list.reduce((map, item) => { map[item[key]] = item; return map }, {})
+const keyBy = (list, key) => list
+	.reduce((map, item) => {
+		// last one wins, if there are duplicate names
+		map[item[key]] = item
+		return map
+	}, {})
 
 const generatePrintableComponentLines = javascriptDetails => {
 	const componentDetails = javascriptDetails
@@ -84,7 +92,9 @@ const generatePathParts = javascriptDetails => {
 		.filter(({ path }) => path.startsWith('paths/'))
 		.map(details => {
 			const [ , ...pathKeys ] = details.path.split('/')
-			details.pathKey = '/' + pathKeys.join('/')
+			let prefix = details.api || '/'
+			if (!prefix.endsWith('/')) prefix += '/'
+			details.pathKey = prefix + pathKeys.join('/')
 			return details
 		})
 	if (!pathDetails.length) return []
@@ -150,18 +160,26 @@ const generatePathParts = javascriptDetails => {
 	return { definitionLines, routeLines }
 }
 
-const generateTagLines = async (directory, pathPrefix, javascriptNameToDetails) => {
-	const tags = javascriptNameToDetails.tags && await import(path.join(directory, javascriptNameToDetails.tags.file))
-	const tagLines = tags && Object
+const generateTagLines = async javascriptDetails => {
+	const tags = {}
+	for (const part of javascriptDetails.filter(({ name }) => name === 'tags')) {
+		const imported = await import(path.join(part.dir, part.file))
+		for (const tag in imported) {
+			tags[tag] = imported[tag]
+			tags[tag]._part = part
+		}
+	}
+	const tagLines = Object
 		.keys(tags)
 		.map(tagName => {
 			const lines = []
+			const id = tags[tagName]._part.id
 			if (tags[tagName].name) {
-				lines.push(`\t\ttags[${quoteString(tagName)}],`)
+				lines.push(`\t\t${id}[${quoteString(tagName)}],`)
 			} else {
 				lines.push('\t\t{')
 				lines.push(`\t\t\tname: ${quoteString(tagName)},`)
-				lines.push(`\t\t\t...tags[${quoteString(tagName)}],`)
+				lines.push(`\t\t\t...${id}[${quoteString(tagName)}],`)
 				lines.push('\t\t},')
 			}
 			return lines
@@ -172,55 +190,86 @@ const generateTagLines = async (directory, pathPrefix, javascriptNameToDetails) 
 		: []
 }
 
-export const glopen = async ({ api: directory, pathPrefix, ext: filenameExtensionPrefix }) => {
+const getAllGlobbed = async mergeList => {
+	const globbed = []
+	// we make a tree here so we can traverse it and find the most shallow root possible
+	// if we didn't do this, our JS identifiers would get crazy long
+	const globbedTree = {}
+	for (const merge of mergeList) {
+		const files = await tinyGlob(`${merge.dir}/**/*.${merge.ext || DEFAULT_EXTENSION_PREFIX}.{js,md}`, { cwd: merge.dir })
+		for (const file of files) {
+			const abs = path.join(merge.dir, file)
+			const part = Object.assign({}, merge, { file }, { abs })
+			globbed.push(part)
+			dset(globbedTree, abs.split('/').join('.'), true)
+		}
+	}
+	let commonRoot = []
+	const recurse = obj => {
+		let keys = Object.keys(obj)
+		if (keys.length === 1) {
+			commonRoot.push(keys[0])
+			return recurse(obj[keys[0]])
+		}
+	}
+	recurse(globbedTree)
+	commonRoot = commonRoot.join('/')
+
+	const globbedJs = []
+	const globbedMd = []
+	for (const part of globbed) {
+		part.name = part.file.split('/').pop().split('.').slice(0, -2).join('.')
+		part.id = toJsIdentifier(part.abs.split(commonRoot)[1].replace(/^\//, '').replace(new RegExp(`\.${part.ext}\.${part.file.split('.').pop()}$`), ''))
+		if (part.file.endsWith('.js')) globbedJs.push(part)
+		else globbedMd.push(part)
+	}
+	return { globbedJs, globbedMd }
+}
+
+export const glopen = async ({ merge }) => {
+	if (!merge || !merge.length) throw new Error('No merge parts set.')
+	if (merge.find(part => !part.dir)) throw new Error('No directory set on one or more parts.')
+
+	const { globbedJs, globbedMd } = await getAllGlobbed(merge)
+
 	const lines = []
 
-	// glob the api files
-	const [ globbedJs, globbedMd ] = (await tinyGlob(`${directory}/**/*.${filenameExtensionPrefix}.{js,md}`, { cwd: directory }))
-		.reduce(([ js, md ], file) => {
-			if (file.endsWith('.js')) js.push(file)
-			else md.push(file)
-			return [ js, md ]
-		}, [ [], [] ])
-
-	const { markdownImportLines, markdownDetails } = await loadAllMarkdownFiles(directory, globbedMd)
+	const { markdownImportLines, markdownDetails } = await loadAllMarkdownFiles(globbedMd)
 	lines.push(...markdownImportLines)
 
-	const javascriptDetails = globbedJs.map(file => {
-		const parts = file.split('/')
-		const filename = parts.pop()
-		const name = filename.replace(`.${filenameExtensionPrefix}.js`, '')
-		return {
-			name,
-			file,
-			id: toJsIdentifier([ ...parts, name ].join('_')),
-			path: parts.join('/'),
-			markdown: markdownDetails[[ ...parts, name ].join('/')]
-		}
+	const javascriptDetails = globbedJs.map(part => {
+		const pathPieces = part.file.split('/')
+		const filename = pathPieces.pop()
+		part.path = pathPieces.join('/')
+		const name = filename.replace(`.${part.ext}.js`, '')
+		part.markdown = markdownDetails[[ part.dir, ...pathPieces, name ].join('/')]
+		return part
 	})
-	const javascriptNameToDetails = keyBy(javascriptDetails, 'name')
 
-	lines.push(...generateImportLines(pathPrefix, javascriptDetails))
-
-	const pathParts = generatePathParts(javascriptDetails)
+	lines.push(...generateImportLines(javascriptDetails))
 
 	lines.push('export const definition = {')
-	if (javascriptNameToDetails._) lines.push('\t..._,')
+	const root = javascriptDetails.filter(part => part.name === '_').pop()
+	if (root) lines.push(`\t...${root.id},`)
 
 	// if the root `info` has a `description` from markdown, we'll need to construct the object
-	const infoMarkdown = globbedMd.find(file => file === `info.description.${filenameExtensionPrefix}.md`)
+	const infoMarkdown = globbedMd.filter(part => part.file === `info.description.${part.ext}.md`).pop()
+	const rootInfo = javascriptDetails.filter(part => part.name === 'info').pop()
 	if (infoMarkdown) {
 		lines.push('\tinfo: {')
-		if (javascriptNameToDetails.info) lines.push('\t\t...info,')
-		lines.push(`\t\tdescription: ${toJsIdentifier(`info.description.${filenameExtensionPrefix}.md`)},`)
+		if (rootInfo) lines.push(`\t\t...${rootInfo.id},`)
+		lines.push(`\t\tdescription: ${infoMarkdown.id},`)
 		lines.push('\t},')
-	} else if (javascriptNameToDetails.info) {
-		lines.push('\tinfo,')
+	} else if (rootInfo) {
+		lines.push(`\t${rootInfo.id},`)
 	}
 
-	lines.push(...(await generateTagLines(directory, pathPrefix, javascriptNameToDetails)))
+	lines.push(...(await generateTagLines(javascriptDetails)))
 	lines.push(...generatePrintableComponentLines(javascriptDetails))
+
+	const pathParts = generatePathParts(javascriptDetails)
 	lines.push(...pathParts.definitionLines)
+
 	lines.push('}')
 
 	return {

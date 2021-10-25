@@ -23,5 +23,5 @@ export const task = {
 
 export const user = {
 	name: 'user',
-	description: 'Owners of tasks.'
+	description: 'Owners of tasks. This one will get overridden by demo-api-v2'
 }

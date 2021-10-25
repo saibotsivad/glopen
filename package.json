@@ -1,7 +1,7 @@
 {
   "name": "glopen",
-  "version": "0.0.1",
-  "description": "GLobbify OPENapi: Glob a folder structure into an OpenAPI definition and API driver.",
+  "version": "0.0.2",
+  "description": "GLobbify OPENapi: Glob folder structures into an OpenAPI definition and API driver.",
   "bin": "bin.js",
   "type": "module",
   "module": "dist/index.js",
@@ -16,7 +16,7 @@
   "scripts": {
     "build": "npm run build-src && npm run build-demo",
     "build-src": "bundt src/index.js",
-    "build-demo": "mkdir -p example/build && node bin.js --api=./demo-api --out=example/build/generated.js --pathPrefix=../../demo-api",
+    "build-demo": "mkdir -p example/build && node bin.js -c",
     "postbuild-demo": "node example/openapijson.js && ajv-openapi-compile --definition example/build/generated.json --output example/build/schemas.cjs",
     "start-simple": "node example/polka.js",
     "start-advanced": "node example/polka-ajv.js"
@@ -35,7 +35,8 @@
   "keywords": [
     "openapi",
     "glob",
-    "generator"
+    "generator",
+    "glopen"
   ],
   "author": {
     "name": "Tobias Davis",
@@ -56,6 +57,7 @@
     "polka": "^0.5.2"
   },
   "dependencies": {
+    "dset": "^3.1.0",
     "mri": "^1.2.0",
     "tiny-glob": "^0.2.9",
     "to-js-identifier": "^1.0.0"
