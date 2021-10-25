@@ -54,7 +54,7 @@ const code = await glopen({
 await writeFile('./generated-file.js', code, 'utf8')
 ```
 
-Lastly, you can use the `--config` (or `-c` alias) to point to a JavaScript file that exports a config object:
+You can also use the `--config` (or `-c` alias) to point to a JavaScript file that exports a config object:
 
 ```js
 export default {
