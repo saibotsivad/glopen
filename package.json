@@ -14,6 +14,7 @@
     "./package.json": "./package.json"
   },
   "scripts": {
+    "test": "echo maybe soon...",
     "build": "npm run build-src && npm run build-demo",
     "build-src": "bundt src/index.js",
     "build-demo": "mkdir -p example/build && node bin.js -c",
