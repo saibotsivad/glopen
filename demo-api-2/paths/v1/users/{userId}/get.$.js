@@ -1,4 +1,4 @@
-import { user as userTag } from '../../../../../tags.@.js'
+import { user as userTag } from '../../../../tags.$.js'
 
 export const summary = 'Fetch a single user.'
 

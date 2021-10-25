@@ -22,6 +22,12 @@ As part of the build process, for a single folder structure, simply do:
 glopen --dir=./path/to/api/folder --out=./generated-file.js
 ```
 
+The `--out` flag is optional, if not set the code will print, so you could also do:
+
+```shell
+glopen --dir=./path/to/api/folder > ./generated-file.js
+```
+
 For multiple merged folder structures, you can use multiple `--json` parameters, with each being a JSON object, or an array of objects:
 
 ```shell
@@ -43,8 +49,7 @@ const code = await glopen({
 			api: '/api/v1/tasks',
 			ext: '@'
 		}
-	],
-	outDir: './' // for path resolution
+	]
 })
 await writeFile('./generated-file.js', code, 'utf8')
 ```
@@ -84,7 +89,7 @@ However, if you used `glopen --dir=./demo --api=/v1` the OpenAPI operation would
 
 ## API `glopen({ merge: Array<Part> })`
 
-When used in code, the input is an object with a `merge` property and `outDir` property, which is an ordered array of "part" objects.
+When used in code, the input is an object with a `merge` property, which is an ordered array of "part" objects.
 
 ```js
 const code = await glopen({
@@ -95,7 +100,6 @@ const code = await glopen({
 			ext: '@'
 		}
 	],
-	outDir: './'
 })
 ```
 
@@ -110,8 +114,7 @@ In single mode, a single "part" is passed in as CLI args:
 ```shell
 glopen --api=./path/to/users \
        --prefix=/api/v2/users \
-       --suffix=@ \
-       --out=./generated-file.js
+       --suffix=@
 ```
 
 ### JSON Mode
@@ -120,8 +123,7 @@ In JSON mode, one or more "parts" are passed in as JSON strings, either as objec
 
 ```shell
 glopen --json='{ "dir": "./path/to/users", "api": "/api/v2/users", "ext": "@" }' \
-       --json='[ { "dir": "./path/to/tasks", "api": "/api/v2/tasks", "ext": "$" }, { "dir": "./path/to/cars", "api": "/api/v1/cars", "ext": "@" } ]' \
-       --out=./generated-file.js
+       --json='[ { "dir": "./path/to/tasks", "api": "/api/v2/tasks", "ext": "$" }, { "dir": "./path/to/cars", "api": "/api/v1/cars", "ext": "@" } ]'
 ```
 
 The order of all JSON inputs is preserved, so the above example would be the same as:
@@ -144,8 +146,7 @@ await glopen({
 			api: '/api/v1/cars',
 			ext: '$'
 		},
-	],
-	outDir: './'
+	]
 })
 ```
 
@@ -162,7 +163,7 @@ glopen -c ./path/to/config.js
 The config file must export a default object containing the following properties:
 
 - `merge: Array<Part>` *required* - An array of "parts", e.g. `dir`, `api`, `ext`.
-- `output: String` *required* - The file path to write to.
+- `output: String` *optional* - The file path to write to.
 
 ## Merge Order
 

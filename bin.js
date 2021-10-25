@@ -52,27 +52,22 @@ if (isSingle) {
 }
 
 if (!output) die('Cannot resolve paths in compiled code without output file/directory.')
-
-// defaults
-// fully resolve the api directory
-// if (!directory.endsWith('/')) directory = `${directory}/`
-// if (!directory.startsWith('/')) directory = path.resolve(directory)
+output = output.startsWith('/')
+	? output
+	: path.resolve(output)
 
 glopen({
 	merge: merge.map(({ dir, api, ext }) => ({
 		api,
 		ext,
-		absoluteDir: dir.startsWith('/')
+		dir: dir.startsWith('/')
 			? dir
 			: path.resolve(dir)
-	})),
-	absoluteOutputDir: output.startsWith('/')
-		? path.dirname(output)
-		: path.dirname(path.resolve(output))
+	}))
 })
-	// .then(({ definition, routes }) => {
-	// 	if (output) return fs.writeFile(output, definition + '\n\n' + routes + '\n', 'utf8')
-	// })
+	.then(({ definition, routes }) => {
+		if (output) return fs.writeFile(output, definition + '\n\n' + routes + '\n', 'utf8')
+	})
 	.then(() => {
 		if (output) console.log(`Wrote to: ${output}`)
 		process.exit(0)
