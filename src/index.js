@@ -4,6 +4,7 @@ import path from 'node:path'
 import tinyGlob from 'tiny-glob'
 import toJsIdentifier from 'to-js-identifier'
 
+const DEFAULT_EXTENSION_PREFIX = '@'
 const PATH_REPLACER = /{([^}]+)}/g
 const NAMES_WITH_NO_DEFAULT = [ '_', 'tags', 'info' ]
 const NAMES_REQUIRING_HANDLERS = [ 'get', 'put', 'post', 'delete', 'options', 'head', 'patch', 'trace' ]
@@ -172,7 +173,11 @@ const generateTagLines = async (directory, pathPrefix, javascriptNameToDetails) 
 		: []
 }
 
-export const glopen = async ({ api: directory, pathPrefix, ext: filenameExtensionPrefix }) => {
+export const glopen = async (args) => {
+	console.log(args)
+	process.exit(1)
+
+	let { api: directory, pathPrefix, ext: filenameExtensionPrefix } = YOLO
 	const lines = []
 
 	// glob the api files
