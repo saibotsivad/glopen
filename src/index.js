@@ -12,8 +12,6 @@ const NAMES_REQUIRING_HANDLERS = [ 'get', 'put', 'post', 'delete', 'options', 'h
 
 const quoteString = string => JSON.stringify(string)
 
-const relativeModuleName = (pathPrefix, file) => quoteString(path.join(pathPrefix, file))
-
 const loadMarkdownFile = async part => fs
 	.readFile(part.abs, 'utf8')
 	.then(string => Object.assign(part, { string }))
@@ -46,13 +44,6 @@ const generateImportLines = globbedJs => {
 	importLines.push('')
 	return importLines
 }
-
-const keyBy = (list, key) => list
-	.reduce((map, item) => {
-		// last one wins, if there are duplicate names
-		map[item[key]] = item
-		return map
-	}, {})
 
 const generatePrintableComponentLines = javascriptDetails => {
 	const componentDetails = javascriptDetails
@@ -226,7 +217,7 @@ const getAllGlobbed = async mergeList => {
 	return { globbedJs, globbedMd }
 }
 
-export const glopen = async ({ merge }) => {
+export const glopen = async ({ openapi, merge }) => {
 	if (!merge || !merge.length) throw new Error('No merge parts set.')
 	if (merge.find(part => !part.dir)) throw new Error('No directory set on one or more parts.')
 
@@ -249,7 +240,8 @@ export const glopen = async ({ merge }) => {
 	lines.push(...generateImportLines(javascriptDetails))
 
 	lines.push('export const definition = {')
-	const root = javascriptDetails.filter(part => part.name === '_').pop()
+	lines.push(`\topenapi: ${quoteString(openapi)},`)
+	const root = javascriptDetails.filter(part => part.name === '_' && !part.path).pop()
 	if (root) lines.push(`\t...${root.id},`)
 
 	// if the root `info` has a `description` from markdown, we'll need to construct the object

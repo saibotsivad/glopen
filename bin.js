@@ -6,6 +6,7 @@ import mri from 'mri'
 import { glopen } from './src/index.js'
 
 const DEFAULT_CONFIG = './glopen.config.js'
+const CWD = process.cwd()
 
 const die = (message, arg) => {
 	console.log(message)
@@ -13,11 +14,18 @@ const die = (message, arg) => {
 	process.exit(1)
 }
 
-let { json, c, config, dir, api, ext, out: output } = mri(process.argv.slice(2))
+let { json, c, config, dir, api, ext, out: output, openapi } = mri(process.argv.slice(2))
+openapi = openapi || '3.0.2'
 config = c || config
 config = typeof config === 'boolean'
 	? DEFAULT_CONFIG
 	: config
+if (config && !config.startsWith('/')) config = path.join(CWD, config)
+if (output) {
+	output = output.startsWith('/')
+		? output
+		: path.resolve(output)
+}
 
 let merge = []
 
@@ -51,12 +59,8 @@ if (isSingle) {
 	if (!output && details.default.output) output = details.default.output
 }
 
-if (!output) die('Cannot resolve paths in compiled code without output file/directory.')
-output = output.startsWith('/')
-	? output
-	: path.resolve(output)
-
 glopen({
+	openapi,
 	merge: merge.map(({ dir, api, ext }) => ({
 		api,
 		ext,
@@ -66,7 +70,9 @@ glopen({
 	}))
 })
 	.then(({ definition, routes }) => {
-		if (output) return fs.writeFile(output, definition + '\n\n' + routes + '\n', 'utf8')
+		const string = definition + '\n\n' + routes
+		if (output) return fs.writeFile(output,  string, 'utf8')
+		else console.log(string)
 	})
 	.then(() => {
 		if (output) console.log(`Wrote to: ${output}`)
