@@ -66,8 +66,8 @@ glopen({
 		ext,
 		dir: dir.startsWith('/')
 			? dir
-			: path.resolve(dir)
-	}))
+			: path.resolve(dir),
+	})),
 })
 	.then(({ definition, routes }) => {
 		const string = definition + '\n\n' + routes

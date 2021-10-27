@@ -9,3 +9,6 @@
 
 # globbed things
 globbed-*.js
+
+# build things
+/dist
