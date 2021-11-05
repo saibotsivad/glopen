@@ -6,13 +6,13 @@ export default {
 		},
 		type: {
 			type: 'string',
-			enum: [ 'user' ]
+			enum: [ 'user' ],
 		},
 		meta: {
-			$ref: '#/components/schemas/meta'
+			$ref: '#/components/schemas/meta',
 		},
 		attributes: {
-			type: 'object'
-		}
-	}
+			type: 'object',
+		},
+	},
 }

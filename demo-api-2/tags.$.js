@@ -1,4 +1,4 @@
 export const user = {
 	name: 'user',
-	description: 'Owners of tasks.'
+	description: 'Owners of tasks.',
 }

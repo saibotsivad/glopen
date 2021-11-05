@@ -4,5 +4,5 @@ export default {
 		code: {
 			type: 'string',
 		},
-	}
+	},
 }

@@ -3,13 +3,13 @@ export default {
 		{
 			dir: './demo-api-1',
 			api: '/api',
-			ext: '@'
+			ext: '@',
 		},
 		{
 			dir: './demo-api-2',
 			api: '/api',
-			ext: '$'
-		}
+			ext: '$',
+		},
 	],
-	output: 'example/build/generated.js'
+	output: 'example/build/generated.js',
 }

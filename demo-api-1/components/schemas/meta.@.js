@@ -8,6 +8,6 @@ export default {
 		updated: {
 			type: 'string',
 			format: 'date-time',
-		}
-	}
+		},
+	},
 }

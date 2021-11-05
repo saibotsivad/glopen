@@ -8,13 +8,13 @@ path. It can use \`markdown\` of course.
 `
 
 export const tags = [
-	taskTag.name
+	taskTag.name,
 	// or you could just do strings, e.g. `"task"`, and it'll get verified on build
 ]
 
 export const security = [
 	// $NAME uses the securitySchemas/$NAME.security.js
-	{ cookie: [] }
+	{ cookie: [] },
 ]
 
 export const responses = {
@@ -26,16 +26,16 @@ export const responses = {
 					type: 'object',
 					properties: {
 						data: {
-							$ref: '#/components/schemas/task'
-						}
-					}
-				}
-			}
-		}
+							$ref: '#/components/schemas/task',
+						},
+					},
+				},
+			},
+		},
 	},
 	default: {
-		$ref: '#/components/responses/error'
-	}
+		$ref: '#/components/responses/error',
+	},
 }
 
 export default async (request, response) => {
@@ -45,12 +45,12 @@ export default async (request, response) => {
 			id: request.params.taskId,
 			type: 'task',
 			attributes: {
-				completed: false
+				completed: false,
 			},
 			links: {
-				self: `http://localhost:3000/api/v1/tasks/${request.params.taskId}`
-			}
-		}
+				self: `http://localhost:3000/api/v1/tasks/${request.params.taskId}`,
+			},
+		},
 	}
 	if (request.openapi) {
 		// The advanced example includes a home-built wrapper that maps returned
@@ -58,7 +58,7 @@ export default async (request, response) => {
 		return {
 			status: 200,
 			json: true,
-			body
+			body,
 		}
 	} else {
 		// For the simple example, it's the responsibility of the route handler

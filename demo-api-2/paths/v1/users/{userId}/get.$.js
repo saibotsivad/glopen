@@ -10,7 +10,7 @@ path. It can use \`markdown\` of course.
 export const tags = [
 	userTag.name,
 	// You can also just do strings, like this, and it'll get verified on build:
-	'demo'
+	'demo',
 ]
 
 export const parameters = [
@@ -20,15 +20,15 @@ export const parameters = [
 		schema: {
 			type: 'string',
 			enum: [
-				'tasks'
-			]
-		}
-	}
+				'tasks',
+			],
+		},
+	},
 ]
 
 export const security = [
 	// $NAME uses the securitySchemas/$NAME.security.js
-	{ cookie: [] }
+	{ cookie: [] },
 ]
 
 export const responses = {
@@ -40,16 +40,16 @@ export const responses = {
 					type: 'object',
 					properties: {
 						data: {
-							$ref: '#/components/schemas/user'
-						}
-					}
-				}
-			}
-		}
+							$ref: '#/components/schemas/user',
+						},
+					},
+				},
+			},
+		},
 	},
 	default: {
-		$ref: '#/components/responses/error'
-	}
+		$ref: '#/components/responses/error',
+	},
 }
 
 export default async (request, response) => {
@@ -59,12 +59,12 @@ export default async (request, response) => {
 			id: request.params.userId,
 			type: 'user',
 			attributes: {
-				completed: false
+				completed: false,
 			},
 			links: {
-				self: `http://localhost:3000/api/v1/users/${request.params.userId}`
-			}
-		}
+				self: `http://localhost:3000/api/v1/users/${request.params.userId}`,
+			},
+		},
 	}
 	if (request.openapi) {
 		// The advanced example includes a home-built wrapper that maps returned
@@ -72,7 +72,7 @@ export default async (request, response) => {
 		return {
 			status: 200,
 			json: true,
-			body
+			body,
 		}
 	} else {
 		// For the simple example, it's the responsibility of the route handler

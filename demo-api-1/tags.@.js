@@ -13,15 +13,15 @@ the exported `const` name.
 E.g, this will map to `{ name: 'demo', description: 'Things happen.' }
 */
 export const demo = {
-	description: 'Things happen.'
+	description: 'Things happen.',
 }
 
 export const task = {
 	name: 'task',
-	description: 'A thing that needs doing.'
+	description: 'A thing that needs doing.',
 }
 
 export const user = {
 	name: 'user',
-	description: 'Owners of tasks. This one will get overridden by demo-api-v2'
+	description: 'Owners of tasks. This one will get overridden by demo-api-v2',
 }

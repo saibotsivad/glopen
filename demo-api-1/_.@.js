@@ -13,12 +13,12 @@ export const openapi = '3.0.2'
 export const servers = [
 	{
 		url: 'https://development.gigantic-server.com/v1',
-		description: 'An example development server.'
-	}
+		description: 'An example development server.',
+	},
 ]
 
 // OPTIONAL
 export const externalDocs = {
 	url: 'https://site.com',
-	description: 'Find more details here.'
+	description: 'Find more details here.',
 }

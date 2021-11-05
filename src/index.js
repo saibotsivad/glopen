@@ -70,11 +70,11 @@ const generatePrintableComponentLines = javascriptDetails => {
 				return [
 					`\t\t${quoteString(type)}: {`,
 					...components[type].map(line => `\t\t\t${line},`),
-					'\t\t},'
+					'\t\t},',
 				]
 			})
 			.flat(),
-		'\t},'
+		'\t},',
 	]
 }
 
@@ -103,7 +103,7 @@ const generatePathParts = javascriptDetails => {
 			pathItemObjectMap[pathKey][method] = [
 				`...${id},`,
 				`operationId: ${quoteString(id)},`,
-				markdown && `${markdown.accessor}: ${markdown.id},`
+				markdown && `${markdown.accessor}: ${markdown.id},`,
 			].filter(Boolean)
 			// set up the route
 			routes.push([
@@ -113,7 +113,7 @@ const generatePathParts = javascriptDetails => {
 				`method: ${quoteString(method)},`,
 				`path: ${quoteString(pathKey)},`,
 				`pathAlt: ${quoteString(pathKey.replaceAll(PATH_REPLACER, ':$1'))},`,
-				`operationId: ${quoteString(id)}`
+				`operationId: ${quoteString(id)}`,
 			])
 		}
 	}
@@ -136,7 +136,7 @@ const generatePathParts = javascriptDetails => {
 				return lines
 			})
 			.flat(),
-		'\t},'
+		'\t},',
 	]
 
 	const routeLines = routes
@@ -210,7 +210,7 @@ const getAllGlobbed = async mergeList => {
 	const globbedMd = []
 	for (const part of globbed) {
 		part.name = part.file.split('/').pop().split('.').slice(0, -2).join('.')
-		part.id = toJsIdentifier(part.abs.split(commonRoot)[1].replace(/^\//, '').replace(new RegExp(`\.${part.ext}\.${part.file.split('.').pop()}$`), ''))
+		part.id = toJsIdentifier(part.abs.split(commonRoot)[1].replace(/^\//, '').replace(new RegExp(`.${part.ext}.${part.file.split('.').pop()}$`), ''))
 		if (part.file.endsWith('.js')) globbedJs.push(part)
 		else globbedMd.push(part)
 	}
@@ -266,6 +266,6 @@ export const glopen = async ({ openapi, merge }) => {
 
 	return {
 		definition: lines.join('\n'),
-		routes: 'export const routes = [\n' + pathParts.routeLines.join('\n') + '\n]\n'
+		routes: 'export const routes = [\n' + pathParts.routeLines.join('\n') + '\n]\n',
 	}
 }

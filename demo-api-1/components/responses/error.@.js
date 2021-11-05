@@ -6,10 +6,10 @@ export default {
 				type: 'object',
 				properties: {
 					error: {
-						$ref: '#/components/schemas/error'
-					}
-				}
-			}
-		}
-	}
+						$ref: '#/components/schemas/error',
+					},
+				},
+			},
+		},
+	},
 }

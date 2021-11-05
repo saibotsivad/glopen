@@ -4,5 +4,5 @@ export default {
 	name: 'DEMO_API',
 	description: `
 		Just a normal cookie security thing.
-	`
+	`,
 }

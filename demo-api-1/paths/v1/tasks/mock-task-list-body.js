@@ -4,11 +4,11 @@ export const mockTaskListBody = {
 			id: '9001',
 			type: 'task',
 			attributes: {
-				completed: false
+				completed: false,
 			},
 			links: {
-				self: `http://localhost:3000/api/v1/tasks/9001`
-			}
-		}
-	]
+				self: `http://localhost:3000/api/v1/tasks/9001`,
+			},
+		},
+	],
 }

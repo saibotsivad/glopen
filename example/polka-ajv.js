@@ -47,7 +47,7 @@ const jsonApiWrapper = ({ handler, exports, method, path, pathAlt, operationId }
 			response.end(
 				typeof body === 'string'
 					? body
-					: JSON.stringify(body)
+					: JSON.stringify(body),
 			)
 		})
 }

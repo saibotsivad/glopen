@@ -5,5 +5,5 @@ export default {
 	description: 'The `taskId` is a global parameter, whereas the `userId` is path specific.',
 	schema: {
 		type: 'string',
-	}
+	},
 }

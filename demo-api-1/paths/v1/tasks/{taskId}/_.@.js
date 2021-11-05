@@ -1,5 +1,5 @@
 export const parameters = [
 	{
-		$ref: '#/components/parameters/taskId'
-	}
+		$ref: '#/components/parameters/taskId',
+	},
 ]

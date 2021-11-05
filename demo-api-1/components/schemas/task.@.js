@@ -6,13 +6,13 @@ export default {
 		},
 		type: {
 			type: 'string',
-			enum: [ 'task' ]
+			enum: [ 'task' ],
 		},
 		meta: {
-			$ref: '#/components/schemas/meta'
+			$ref: '#/components/schemas/meta',
 		},
 		attributes: {
-			type: 'object'
-		}
-	}
+			type: 'object',
+		},
+	},
 }
