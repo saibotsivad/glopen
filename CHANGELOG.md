@@ -22,6 +22,10 @@ Change categories are:
 ### Removed
 ### Security
 
+## [0.0.3] - 2021-11-08
+### Changed
+- If you use the CLI tool and the output directory doesn't exist, it'll get created.
+
 ## [0.0.2] - 2021-10-25
 ### Added
 - Ability to merge multiple OpenAPI folder structures.
@@ -35,6 +39,7 @@ Change categories are:
 - Created the base project.
 
 [Unreleased]: https://github.com/saibotsivad/glopen/compare/v0.0.0...HEAD
+[0.0.3]: https://github.com/saibotsivad/glopen/compare/v0.0.2...v0.0.3
 [0.0.2]: https://github.com/saibotsivad/glopen/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/saibotsivad/glopen/compare/v0.0.0...v0.0.1
 [0.0.0]: https://github.com/saibotsivad/glopen/tree/v0.0.0

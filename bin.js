@@ -72,10 +72,15 @@ setup()
 				: path.resolve(dir),
 		})),
 	}))
-	.then(({ definition, routes }) => {
+	.then(async ({ definition, routes }) => {
 		const string = definition + '\n\n' + routes
-		if (output) return fs.writeFile(output,  string, 'utf8')
-		else console.log(string)
+		if (output) {
+			const outdir = path.dirname(output)
+			await fs.mkdir(outdir, { recursive: true })
+			return fs.writeFile(output,  string, 'utf8')
+		} else {
+			console.log(string)
+		}
 	})
 	.then(() => {
 		if (output) console.log(`Wrote to: ${output}`)
