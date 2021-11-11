@@ -2,7 +2,9 @@
 
 import fs from 'node:fs/promises'
 import path from 'node:path'
+import { EventEmitter } from 'node:events'
 import mri from 'mri'
+import CheapWatch from 'cheap-watch'
 import { glopen } from './src/index.js'
 
 const DEFAULT_CONFIG = './glopen.config.js'
@@ -14,26 +16,26 @@ const die = (message, arg) => {
 	process.exit(1)
 }
 
-let { json, c, config, dir, api, ext, out: output, openapi } = mri(process.argv.slice(2))
+const absResolve = dir => dir.startsWith('/') ? dir : path.resolve(dir)
+
+let { json, c, config, dir, api, ext, out: output, openapi, watch, w } = mri(process.argv.slice(2))
 openapi = openapi || '3.0.2'
+watch = watch || w
 config = c || config
 config = typeof config === 'boolean'
 	? DEFAULT_CONFIG
 	: config
 if (config && !config.startsWith('/')) config = path.join(CWD, config)
 if (output) {
-	output = output.startsWith('/')
-		? output
-		: path.resolve(output)
+	output = absResolve(output)
 }
-
-let merge = []
 
 let isSingle = dir || api || ext
 let count = (isSingle && 1) + (json && 1) + (config && 1)
 if (count > 1) die('Cannot specify multiple input methods at the same time.')
 
 const setup = async () => {
+	const merge = []
 	if (isSingle) {
 		merge.push({ dir, api, ext })
 	} else if (json) {
@@ -59,34 +61,79 @@ const setup = async () => {
 		merge.push(...details.default.merge)
 		if (!output && details.default.output) output = details.default.output
 	}
+	if (!output && watch) {
+		console.log('Cannot safely run watch without an output file specified.')
+		process.exit(1)
+	}
+	return merge
 }
 
-setup()
-	.then(() => glopen({
+const build = async parts => {
+	const { definition, routes } = await glopen({
 		openapi,
-		merge: merge.map(({ dir, api, ext }) => ({
+		merge: parts.map(({ dir, api, ext }) => ({
 			api,
 			ext,
-			dir: dir.startsWith('/')
-				? dir
-				: path.resolve(dir),
+			dir: absResolve(dir),
 		})),
-	}))
-	.then(async ({ definition, routes }) => {
-		const string = definition + '\n\n' + routes
-		if (output) {
-			const outdir = path.dirname(output)
-			await fs.mkdir(outdir, { recursive: true })
-			return fs.writeFile(output,  string, 'utf8')
+	})
+	const string = definition + '\n\n' + routes
+	if (output) {
+		const outdir = path.dirname(output)
+		await fs.mkdir(outdir, { recursive: true })
+		await fs.writeFile(output, string, 'utf8')
+		console.log(`Wrote to: ${output}`)
+	} else {
+		console.log(string)
+	}
+}
+
+if (watch) {
+	console.log('Entering watch mode...')
+	// if the config files is changed, reload it
+	// then, watch the dirs
+	const forever = new Promise(() => {
+		const emitter = new EventEmitter()
+		let parts
+		emitter.on('restart', () => {
+			setup().then(_parts => {
+				parts = _parts
+				_parts.forEach(p => {
+					const watch = new CheapWatch({
+						dir: absResolve(p.dir),
+						filter: ({ path }) => path.endsWith(`.${p.ext}.js`),
+					})
+					watch.on('+', () => emitter.emit('rebuild'))
+					watch.on('-', () => emitter.emit('rebuild'))
+					watch.init()
+				})
+				emitter.emit('rebuild')
+			})
+		})
+		emitter.on('rebuild', () => {
+			if (parts) {
+				console.log('Rebuilding...')
+				build(parts).then(() => console.log(`Rebuild complete.`))
+			}
+		})
+		if (config) {
+			const configWatch = new CheapWatch({
+				dir: path.dirname(config),
+				filter: ({ path }) => path === config,
+			})
+			configWatch.on('-', () => emitter.emit('restart'))
+			configWatch.init().then(() => emitter.emit('restart'))
 		} else {
-			console.log(string)
+			emitter.emit('restart')
 		}
 	})
-	.then(() => {
-		if (output) console.log(`Wrote to: ${output}`)
-		process.exit(0)
-	})
-	.catch(error => {
-		console.error('Failure when generating:', error)
-		process.exit(1)
-	})
+	forever.then(() => console.log('Watch complete.'))
+} else {
+	setup()
+		.then(parts => build(parts))
+		.then(() => process.exit(0))
+		.catch(error => {
+			console.error('Failure when generating:', error)
+			process.exit(1)
+		})
+}

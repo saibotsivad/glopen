@@ -59,6 +59,7 @@
     "polka": "^0.5.2"
   },
   "dependencies": {
+    "cheap-watch": "^1.0.4",
     "dset": "^3.1.0",
     "mri": "^1.2.0",
     "tiny-glob": "^0.2.9",

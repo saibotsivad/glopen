@@ -22,6 +22,8 @@ As part of the build process, for a single folder structure, simply do:
 glopen --dir=./path/to/api/folder --out=./generated-file.js
 ```
 
+(Use the `-w` or `--watch` flags to watch for changes and rebuild when any are detected, for easier development.)
+
 The `--out` flag is optional, if not set the code will print, so you could also do:
 
 ```shell

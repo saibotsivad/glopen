@@ -22,7 +22,11 @@ Change categories are:
 ### Removed
 ### Security
 
-## [0.0.3] - 2021-11-08
+## [0.0.6] - 2021-11-11
+### Added
+- Watch functionality using cheap-watch.
+
+## [0.0.3-0.0.5] - 2021-11-10
 ### Changed
 - If you use the CLI tool and the output directory doesn't exist, it'll get created.
 
@@ -39,7 +43,8 @@ Change categories are:
 - Created the base project.
 
 [Unreleased]: https://github.com/saibotsivad/glopen/compare/v0.0.0...HEAD
-[0.0.3]: https://github.com/saibotsivad/glopen/compare/v0.0.2...v0.0.3
+[0.0.6]: https://github.com/saibotsivad/glopen/compare/v0.0.5...v0.0.6
+[0.0.3-0.0.5]: https://github.com/saibotsivad/glopen/compare/v0.0.2...v0.0.5
 [0.0.2]: https://github.com/saibotsivad/glopen/compare/v0.0.1...v0.0.2
 [0.0.1]: https://github.com/saibotsivad/glopen/compare/v0.0.0...v0.0.1
 [0.0.0]: https://github.com/saibotsivad/glopen/tree/v0.0.0
