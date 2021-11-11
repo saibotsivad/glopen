@@ -1,6 +1,6 @@
 {
   "name": "glopen",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "description": "GLobbify OPENapi: Glob folder structures into an OpenAPI definition and API driver.",
   "bin": "bin.js",
   "type": "module",
