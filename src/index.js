@@ -1,6 +1,5 @@
 import fs from 'node:fs/promises'
 import path from 'node:path'
-import { dset } from 'dset'
 
 import tinyGlob from 'tiny-glob'
 import toJsIdentifier from 'to-js-identifier'
@@ -183,34 +182,19 @@ const generateTagLines = async javascriptDetails => {
 
 const getAllGlobbed = async mergeList => {
 	const globbed = []
-	// we make a tree here so we can traverse it and find the most shallow root possible
-	// if we didn't do this, our JS identifiers would get crazy long
-	const globbedTree = {}
 	for (const merge of mergeList) {
 		const files = await tinyGlob(`${merge.dir}/**/*.${merge.ext || DEFAULT_EXTENSION_PREFIX}.{js,md}`, { cwd: merge.dir })
 		for (const file of files) {
 			const abs = path.join(merge.dir, file)
 			const part = Object.assign({}, merge, { file }, { abs })
 			globbed.push(part)
-			dset(globbedTree, abs.split('/').join('.'), true)
 		}
 	}
-	let commonRoot = []
-	const recurse = obj => {
-		let keys = Object.keys(obj)
-		if (keys.length === 1) {
-			commonRoot.push(keys[0])
-			return recurse(obj[keys[0]])
-		}
-	}
-	recurse(globbedTree)
-	commonRoot = commonRoot.join('/')
-
 	const globbedJs = []
 	const globbedMd = []
 	for (const part of globbed) {
 		part.name = part.file.split('/').pop().split('.').slice(0, -2).join('.')
-		part.id = toJsIdentifier(part.abs.split(commonRoot)[1].replace(/^\//, '').replace(new RegExp(`.${part.ext}.${part.file.split('.').pop()}$`), ''))
+		part.id = toJsIdentifier(part.abs)
 		if (part.file.endsWith('.js')) globbedJs.push(part)
 		else globbedMd.push(part)
 	}

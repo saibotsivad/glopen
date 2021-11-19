@@ -22,6 +22,10 @@ Change categories are:
 ### Removed
 ### Security
 
+## [0.0.7] - 2021-11-19
+### Changed
+- Previously tried using a tree to shorten JS identifiers but it was breaking and I don't think it matters.
+
 ## [0.0.6] - 2021-11-11
 ### Added
 - Watch functionality using cheap-watch.
@@ -43,6 +47,7 @@ Change categories are:
 - Created the base project.
 
 [Unreleased]: https://github.com/saibotsivad/glopen/compare/v0.0.0...HEAD
+[0.0.7]: https://github.com/saibotsivad/glopen/compare/v0.0.6...v0.0.7
 [0.0.6]: https://github.com/saibotsivad/glopen/compare/v0.0.5...v0.0.6
 [0.0.3-0.0.5]: https://github.com/saibotsivad/glopen/compare/v0.0.2...v0.0.5
 [0.0.2]: https://github.com/saibotsivad/glopen/compare/v0.0.1...v0.0.2

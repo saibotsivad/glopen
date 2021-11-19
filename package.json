@@ -15,6 +15,7 @@
   },
   "scripts": {
     "test": "eslint '**/*.js' --fix",
+    "prepublishOnly": "npm run build",
     "build": "npm run build-src && npm run build-demo",
     "build-src": "bundt src/index.js",
     "build-demo": "mkdir -p example/build && node bin.js -c",
@@ -60,7 +61,6 @@
   },
   "dependencies": {
     "cheap-watch": "^1.0.4",
-    "dset": "^3.1.0",
     "mri": "^1.2.0",
     "tiny-glob": "^0.2.9",
     "to-js-identifier": "^1.0.0"
