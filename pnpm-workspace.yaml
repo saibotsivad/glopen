@@ -1,0 +1,4 @@
+packages:
+  - 'controllers/**'
+  - 'definitions/**'
+  - 'packages/**'

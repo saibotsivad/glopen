@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en-US">
+	<head>
+		<meta charset="UTF-8">
+		<title>Glopen Routes</title>
+		<style>
+			body {
+				color: #444;
+				max-width: 30rem;
+				margin: 0 auto;
+			}
+		</style>
+		<link rel="icon" type="image/png" href="./swagger/favicon-32x32.png" sizes="32x32" />
+		<link rel="icon" type="image/png" href="./swagger/favicon-16x16.png" sizes="16x16" />
+	</head>
+	<body>
+		<h1>
+			<a href="https://github.com/saibotsivad/glopen-routes">@saibotsivad/glopen-routes</a>
+		</h1>
+		<p>
+			These are the available routes that you can import with
+			<a href="https://github.com/saibotsivad/glopen">glopen</a>,
+			as Swagger Editor demo pages so you can explore them more easily.
+		</p>
+		<p>
+			<strong>Note:</strong> the SwaggerUI does not yet support OpenAPI 3.1.0, so if you
+			view the docs with that you'll need to manually tweak the top-level <code>openapi</code>
+			property to be <code>openapi: 3.0.0</code>. Some errors will show, since the versions
+			are not forward-compatible.
+		</p>
+
+		<h2><code>all</code></h2>
+		<p><a href="./all-swagger.html">SwaggerUI</a> | <a href="./all-redoc.html">Redoc</a></p>
+		<p>This is the entire set of routes, for easy grab-and-go.</p>
+
+		<h2><code>allNoTeams</code></h2>
+		<p><a href="./allNoTeams-swagger.html">SwaggerUI</a> | <a href="./allNoTeams-redoc.html">Redoc</a></p>
+		<p>This is <em>almost</em> the entire set of routes, just excluding the teams-related routes.</p>
+	</body>
+</html>

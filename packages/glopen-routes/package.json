@@ -1,0 +1,47 @@
+{
+  "name": "@saibotsivad/glopen-routes",
+  "version": "0.0.10",
+  "description": "Common API routes I find myself needing frequently, in glopen format.",
+  "type": "module",
+  "main": "index.js",
+  "scripts": {
+    "prepublishOnly": "npm run build",
+    "develop": "glopen -w -c ./config-all.glopen.js",
+    "test": "eslint \"**/*.js\"",
+    "prebuild": "rm -rf demo && mkdir -p demo/swagger && ncp node_modules/swagger-editor-dist demo/swagger",
+    "build": "run-p build:*",
+    "build:all": "glopen -c ./config-all.glopen.js | ./build-demo.js all && node test-demo.js all",
+    "build:allNoTeams": "glopen -c ./config-allNoTeams.glopen.js | ./build-demo.js allNoTeams && node test-demo.js allNoTeams",
+    "postbuild": "ncp index.html demo/index.html",
+    "demo": "sirv demo --dev"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen-routes.git"
+  },
+  "keywords": [
+    "glopen",
+    "openapi"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen-routes/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/packages/glopen-routes",
+  "devDependencies": {
+    "ajv-openapi-compile": "^0.0.14",
+    "eslint": "^8.1.0",
+    "glopen": "^0.0.6",
+    "js-yaml": "^4.1.0",
+    "ncp": "^2.0.0",
+    "npm-run-all": "^4.1.5",
+    "openapi-enforcer": "^1.15.5",
+    "sirv-cli": "^1.0.14",
+    "swagger-editor-dist": "^4.0.1"
+  }
+}
