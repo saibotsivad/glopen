@@ -1,8 +1,17 @@
+/*DOCS
+@group: Task Groups
+
+Create a new task group owned by the requesting user.
+
+- `request.controller.taskGroup.create: (request: Request) => { taskGroup: TaskGroup }`
+
+DOCS*/
+
 export const summary = 'Create User Task Group'
 
 export const description = 'Create a task grouping that is owned by a single user.'
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

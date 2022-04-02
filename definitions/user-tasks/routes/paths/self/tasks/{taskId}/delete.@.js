@@ -1,8 +1,17 @@
+/*DOCS
+@group: Tasks
+
+Delete a specific task owned by the requesting user.
+
+- `request.controller.task.remove: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Delete User Task'
 
 export const description = 'Fully delete a task by identifier.'
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

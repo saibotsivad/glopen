@@ -1,8 +1,17 @@
+/*DOCS
+@group: Task Groups
+
+Sparse update of a specific task group, which is owned by the requesting user.
+
+- `request.controller.taskGroup.sparseUpdate: (request: Request) => { taskGroup: TaskGroup }`
+
+DOCS*/
+
 export const summary = 'Update User Task Group'
 
 export const description = 'Update properties for the task group.'
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

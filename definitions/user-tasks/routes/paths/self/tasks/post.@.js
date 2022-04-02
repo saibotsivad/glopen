@@ -1,8 +1,17 @@
+/*DOCS
+@group: Tasks
+
+Create a new task owned by the requesting user.
+
+- `request.controller.task.create: (request: Request) => { task: Task }`
+
+DOCS*/
+
 export const summary = 'Create User Task'
 
 export const description = 'Create a task that is owned by a single user.'
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

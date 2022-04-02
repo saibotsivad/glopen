@@ -1,10 +1,19 @@
+/*DOCS
+@group: Tasks
+
+Fetch the list of tasks owned by the requesting user.
+
+- `request.controller.task.list: (request: Request) => { tasks: Array<Task> }`
+
+DOCS*/
+
 export const summary = 'Get User Task List'
 
 export const description = `
 Fetch the list of available tasks owned by the requesting user.
 `
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

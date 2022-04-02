@@ -1,8 +1,17 @@
+/*DOCS
+@group: Tasks
+
+Fetch a specific task by identifier, which is owned by the requesting user.
+
+- `request.controller.task.get: (request: Request) => { task: Task }`
+
+DOCS*/
+
 export const summary = 'Get User Task'
 
 export const description = 'Get a single task.'
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

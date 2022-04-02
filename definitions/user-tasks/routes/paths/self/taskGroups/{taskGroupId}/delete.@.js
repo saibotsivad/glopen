@@ -1,8 +1,17 @@
+/*DOCS
+@group: Task Groups
+
+Delete a specific task group owned by the requesting user.
+
+- `request.controller.taskGroup.remove: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Delete User Task Group'
 
 export const description = 'Fully delete a task group by identifier. If there are tasks with this group identifier, the relationship will be removed but the task will not be deleted.'
 
-export const tags = [ 'userTasks' ]
+export const tags = ['userTasks']
 
 export const security = [
 	{ cookie: [] },

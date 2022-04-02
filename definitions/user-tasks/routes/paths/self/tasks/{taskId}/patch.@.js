@@ -1,5 +1,5 @@
 /*DOCS
-@group: Task Groups
+@group: Tasks
 
 Sparse update of a specific task, which is owned by the requesting user.
 
