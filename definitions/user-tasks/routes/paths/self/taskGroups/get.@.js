@@ -49,7 +49,22 @@ export const responses = {
 	},
 }
 
+/**
+ * @typedef {import('../../../../../_shared/types/controllers').GlopenCtrlTaskGroupList} ctrl1
+ */
+
+/**
+ * @typedef {import('../../../../../_shared/types/controllers').GlopenCtrlUserGetSelf} ctrl2
+ */
+
+/**
+ * Request handler
+ * @param {ctrl1 & ctrl2} request - The request with all params.
+ */
 export default async request => {
+	const { user } = await request.controller.user.getSelf(request)
+	// TODO remove this
+	console.log('the user is not needed in this route but it is here for me to test', user)
 	const { taskGroups } = await request.controller.taskGroup.list(request)
 	return {
 		status: 200,

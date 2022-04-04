@@ -1,5 +1,5 @@
-import { join, sep } from 'node:path'
-import { readdir, readFile } from 'node:fs/promises'
+import { join, sep, resolve } from 'node:path'
+import { readdir, readFile, writeFile } from 'node:fs/promises'
 import glob from 'tiny-glob'
 
 const start = Date.now()
@@ -24,6 +24,7 @@ const dirs = await readdir('./definitions', { withFileTypes: true })
 
 for (const dir of dirs) {
 	const readme = await readFile(join('./definitions', dir, '_README.md'), 'utf8')
+	const exampleConfig = await readFile(join('./definitions', dir, 'example-glopen.config.js'), 'utf8')
 	const files = await glob('**/*.@.js', { cwd: join('./definitions', dir) })
 	const openapi = []
 	const routes = []
@@ -66,12 +67,20 @@ for (const dir of dirs) {
 		}
 	}
 
+	const tagList = []
+	try {
+		const maybeTags = await import('..' + sep + join('definitions', dir, 'openapi', 'tags.@.js'))
+		tagList.push(...Object.keys(maybeTags))
+	} catch (error) {
+		if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error
+	}
+
 	const groupedOpenapi = openapi.reduce((map, o) => {
 		map[o.grouping] = map[o.grouping] || []
 		map[o.grouping].push(o)
 		return map
 	}, {})
-	const openapiString = 'The OpenAPI parts are:\n\n' + Object
+	let openapiString = 'The OpenAPI parts are:\n\n' + Object
 		.keys(groupedOpenapi)
 		.sort()
 		.map(g => groupedOpenapi[g]
@@ -79,6 +88,12 @@ for (const dir of dirs) {
 			.join('\n')
 		)
 		.join('\n')
+	if (tagList.length) {
+		const suffix = tagList.length > 1 ? 's' : ''
+		openapiString += (
+			'\n' + `- [\`tag${suffix}: ${tagList.join(', ')}\`](./openapi/tags.@.js)`
+		)
+	}
 
 	const groupedRoutes = routes.reduce((map, r) => {
 		const key = r.grouping || '0' // first in sort for well named groupings
@@ -105,9 +120,24 @@ for (const dir of dirs) {
 		})
 		.join('\n\n')
 
-	const finalString = openapiString + '\n\n' + routesString
+	const finalString = readme
+		+ '\n'
+		+ [
+			'To use in `glopen` (see [example config file](./example-glopen.config.js)):',
+			'',
+			'```js',
+			'// glopen.config.js',
+			exampleConfig.trim(),
+			'```',
+		].join('\n')
+		+ '\n\n'
+		+ openapiString
+		+ '\n'
+		+ '- [shared components](../_shared/README.md)'
+		+ '\n\n'
+		+ routesString
+	await writeFile('.' + sep + join('definitions', dir, 'README.md'), finalString, 'utf8')
 	console.log('----------------------', dir)
-	console.log(finalString)
 }
 
 console.log(`Build completed in ${Date.now() - start}ms`)
@@ -123,6 +153,9 @@ The components are:
 - [`schema: taskGroup`](./openapi/components/schemas/taskGroup.@.js)
 - [`tag: userTasks`](./openapi/tags.@.js)
 - [shared components](../_shared/README.md)
+
+- [`tag: userTasks`](./openapi/tags.@.js)
+- [`tags: userTasks, fooBar`](./openapi/tags.@.js)
 
 
 openapi/components/parameters/apiTokenId.@.js
