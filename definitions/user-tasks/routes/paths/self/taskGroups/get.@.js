@@ -50,16 +50,12 @@ export const responses = {
 }
 
 /**
- * @typedef {import('../../../../../_shared/types/controllers').GlopenCtrlTaskGroupList} ctrl1
- */
-
-/**
- * @typedef {import('../../../../../_shared/types/controllers').GlopenCtrlUserGetSelf} ctrl2
+ * @typedef {import("./get").UserTasksSelfTaskGroupsGet} req
  */
 
 /**
  * Request handler
- * @param {ctrl1 & ctrl2} request - The request with all params.
+ * @param {req} request - The request with all params.
  */
 export default async request => {
 	const { user } = await request.controller.user.getSelf(request)

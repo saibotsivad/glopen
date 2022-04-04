@@ -137,7 +137,6 @@ for (const dir of dirs) {
 		+ '\n\n'
 		+ routesString
 	await writeFile('.' + sep + join('definitions', dir, 'README.md'), finalString, 'utf8')
-	console.log('----------------------', dir)
 }
 
 console.log(`Build completed in ${Date.now() - start}ms`)
