@@ -1,10 +1,18 @@
+/*DOCS
+
+Fetch the list of API tokens owned by the requesting user.
+
+- `request.controller.apiToken.list: (request: Request) => { apiTokens: Array<ApiTokens> }`
+
+DOCS*/
+
 export const summary = 'Get User API Tokens'
 
 export const description = `
 Fetch the list of the logged-in user's API tokens.
 `
 
-export const tags = [ 'userApiTokens' ]
+export const tags = ['userApiTokens']
 
 export const security = [
 	{ cookie: [] },

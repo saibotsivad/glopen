@@ -1,8 +1,16 @@
+/*DOCS
+
+Remove one or more admins from a team, if the requesting user is an admin.
+
+- `request.controller.team.removeAdmins: (request: Request) => { admins: Array<UserRelationship> }`
+
+DOCS*/
+
 export const summary = 'Delete Team Admin'
 
 export const description = 'Remove an admin from a team.'
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

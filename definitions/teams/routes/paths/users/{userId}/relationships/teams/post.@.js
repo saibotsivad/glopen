@@ -1,8 +1,16 @@
+/*DOCS
+
+Add a user as a member of one or more teams, if the requesting user is an admin of those teams.
+
+- `await request.controller.user.addTeamMemberships: (request: Request) => { teams: Array<TeamRelationship> }`
+
+DOCS*/
+
 export const summary = 'Add User to Team'
 
 export const description = 'Add one or more users as members of a team.'
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

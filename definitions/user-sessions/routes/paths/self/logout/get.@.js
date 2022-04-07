@@ -1,3 +1,11 @@
+/*DOCS
+
+Mark current cookie session as invalid.
+
+- `request.controller.session.logout: (request: Request) => { cookie: String }`
+
+DOCS*/
+
 export const summary = 'Revoke Session (Log Out)'
 
 export const description = `
@@ -5,7 +13,7 @@ Logging out sets the \`session\` status as \`revoked\`, and returns a \`Set-Cook
 marks the cookie as expired and sets its content to empty.
 `
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const responses = {
 	204: {

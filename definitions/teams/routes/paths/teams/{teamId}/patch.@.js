@@ -1,8 +1,16 @@
+/*DOCS
+
+Sparse update to a team, if the requesting user is an admin of the team.
+
+- `request.controller.team.sparseUpdate: (request: Request) => { team: Team }`
+
+DOCS*/
+
 export const summary = 'Update Team'
 
 export const description = 'Sparse update of an identified team. The requesting user must be an admin of the team.'
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

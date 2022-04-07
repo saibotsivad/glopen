@@ -1,3 +1,11 @@
+/*DOCS
+
+Finalize login flow when 2FA is enabled.
+
+- `request.controller.session.finalize: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Finalize Session (2FA/OTP)'
 
 export const description = `
@@ -16,7 +24,7 @@ Here is an example UX flow for using symmetric encryption of the 2FA secret:
 6. If the response is a \`204\` status, the user is now fully authenticated.
 `
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const parameters = [
 	{ $ref: '#/components/parameters/sessionId' },
@@ -28,11 +36,11 @@ export const requestBody = {
 		'application/json': {
 			schema: {
 				type: 'object',
-				required: [ 'meta' ],
+				required: ['meta'],
 				properties: {
 					meta: {
 						type: 'object',
-						required: [ 'otp', 'password' ],
+						required: ['otp', 'password'],
 						properties: {
 							otp: {
 								type: 'string',

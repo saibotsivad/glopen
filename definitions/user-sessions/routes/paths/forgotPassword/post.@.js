@@ -1,3 +1,11 @@
+/*DOCS
+
+Initiate a password reset request via sending an email.
+
+- `request.controller.user.resetPasswordUnauthorized: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Initiate Password Reset'
 
 export const description = `
@@ -11,7 +19,7 @@ with the user of that username/email, and sends an email to that address, if the
 To finalize the password reset, see the \`PATCH /forgotPassword\` request.
 `
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const requestBody = {
 	description: 'Request a password reset email.',
@@ -19,11 +27,11 @@ export const requestBody = {
 		'application/json': {
 			schema: {
 				type: 'object',
-				required: [ 'meta' ],
+				required: ['meta'],
 				properties: {
 					meta: {
 						type: 'object',
-						required: [ 'username' ],
+						required: ['username'],
 						properties: {
 							username: {
 								type: 'string',

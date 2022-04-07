@@ -1,8 +1,16 @@
+/*DOCS
+
+Remove a user as a member of one or more team, if the requesting user is an admin of those teams.
+
+- `request.controller.user.removeTeamMemberships: (request: Request) => { teams: Array<TeamRelationship> }`
+
+DOCS*/
+
 export const summary = 'Delete Team Member'
 
 export const description = 'Remove a user as a member of a team.'
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

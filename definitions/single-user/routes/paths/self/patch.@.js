@@ -1,3 +1,11 @@
+/*DOCS
+
+Sparse update of the logged-in users user object.
+
+- `request.controller.user.sparseUpdate: (request: Request) => { user: User }`
+
+DOCS*/
+
 export const summary = 'Update User'
 
 export const description = `
@@ -5,7 +13,7 @@ Sparse update of the logged in users own \`user\` resource. Some properties are 
 updated on this request, for example \`attributes.verified\` and other security related properties.
 `
 
-export const tags = [ 'singleUser' ]
+export const tags = ['singleUser']
 
 export const security = [
 	{ cookie: [] },

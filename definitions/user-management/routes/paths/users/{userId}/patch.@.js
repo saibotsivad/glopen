@@ -1,3 +1,11 @@
+/*DOCS
+
+Sparse update of an individual user.
+
+- `request.controller.user.sparseUpdate: (request: Request) => { user: User }`
+
+DOCS*/
+
 export const summary = 'Update Non-Self User'
 
 export const description = `
@@ -6,7 +14,7 @@ to update other users, and some properties are not allowed to be updated on this
 for example \`attributes.verified\` and other security related properties.
 `
 
-export const tags = [ 'userManagement' ]
+export const tags = ['userManagement']
 
 export const security = [
 	{ cookie: [] },

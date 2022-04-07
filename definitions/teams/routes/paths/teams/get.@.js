@@ -1,10 +1,18 @@
+/*DOCS
+
+Fetch the list of teams the requesting user is allowed to see.
+
+- `request.controller.team.list: (request: Request) => { teams: Array<Team> }`
+
+DOCS*/
+
 export const summary = 'Get Team List'
 
 export const description = `
 Fetch the list of all teams available to the requesting user.
 `
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

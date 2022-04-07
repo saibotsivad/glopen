@@ -1,10 +1,18 @@
+/*DOCS
+
+Get a list of users.
+
+- `request.controller.user.list: (request: Request) => { users: Array<User> }`
+
+DOCS*/
+
 export const summary = 'Get User List'
 
 export const description = `
 Fetch the list of all users available to the requesting user.
 `
 
-export const tags = [ 'userManagement' ]
+export const tags = ['userManagement']
 
 export const security = [
 	{ cookie: [] },

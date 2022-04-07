@@ -1,8 +1,16 @@
+/*DOCS
+
+Mark specific cookie session as invalid.
+
+- `request.controller.session.remove: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Delete Session'
 
 export const description = 'Fully delete a session by identifier.'
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const security = [
 	{ cookie: [] },

@@ -1,10 +1,14 @@
+/*DOCS
+
+DOCS*/
+
 export const summary = 'Get Team'
 
 export const description = `
 Fetch the team object for an identified team. The requesting user must be a member of the team.
 `
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

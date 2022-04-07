@@ -1,8 +1,16 @@
+/*DOCS
+
+Add one or more admins to the team, if the requesting user also is an admin.
+
+- `await request.controller.team.addAdmins: (request: Request) => { admins: Array<UserRelationship> }`
+
+DOCS*/
+
 export const summary = 'Add Team Admins'
 
 export const description = 'Add one or more admins to a team.'
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

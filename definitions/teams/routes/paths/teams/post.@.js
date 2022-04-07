@@ -1,8 +1,16 @@
+/*DOCS
+
+Create a new team. The requesting must be made an admin of the created team, but other users could be added at creation as well.
+
+- `request.controller.team.create: (request: Request) => { team: Team }`
+
+DOCS*/
+
 export const summary = 'Create Team'
 
 export const description = 'Create a team to manage services and resources.'
 
-export const tags = [ 'teams' ]
+export const tags = ['teams']
 
 export const security = [
 	{ cookie: [] },

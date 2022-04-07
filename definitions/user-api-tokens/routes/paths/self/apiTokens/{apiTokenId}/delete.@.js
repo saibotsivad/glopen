@@ -1,8 +1,16 @@
+/*DOCS
+
+Delete an API token owned by the requesting user.
+
+- `request.controller.apiToken.remove: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Delete User API Token'
 
 export const description = 'Fully delete an API token owned by a user.'
 
-export const tags = [ 'userApiTokens' ]
+export const tags = ['userApiTokens']
 
 export const security = [
 	{ cookie: [] },

@@ -1,8 +1,16 @@
+/*DOCS
+
+Delete an API token owned by the team, if the requesting user is a member.
+
+- `request.controller.apiToken.remove: (request: Request) => null`
+
+DOCS*/
+
 export const summary = 'Delete Team API Token'
 
 export const description = 'Fully delete an API token owned by a team.'
 
-export const tags = [ 'teamApiTokens' ]
+export const tags = ['teamApiTokens']
 
 export const parameters = [
 	{ $ref: '#/components/parameters/teamId' },

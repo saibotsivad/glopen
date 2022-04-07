@@ -1,10 +1,18 @@
+/*DOCS
+
+Retrieve a list of the logged-in user's sessions.
+
+- `request.controller.session.list: (request: Request) => { sessions: Array<Session> }`
+
+DOCS*/
+
 export const summary = 'Get User Sessions'
 
 export const description = `
 Fetch the list of the logged-in user's sessions.
 `
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const security = [
 	{ cookie: [] },

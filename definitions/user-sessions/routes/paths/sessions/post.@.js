@@ -1,3 +1,11 @@
+/*DOCS
+
+Provide login information to create a new session.
+
+- `request.controller.session.create: (request: Request) => { cookie: String, auth?: { href: String, meta: { expires: String } }`
+
+DOCS*/
+
 export const summary = 'Create Session (Log In)'
 
 export const description = `
@@ -7,7 +15,7 @@ header. If 2FA is enabled, the response body will indicate that, and finalizatio
 the \`PATCH /sessions/{sessionId}\` route.
 `
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const requestBody = {
 	description: 'Create a session using a username/email and password.',
@@ -15,11 +23,11 @@ export const requestBody = {
 		'application/json': {
 			schema: {
 				type: 'object',
-				required: [ 'meta' ],
+				required: ['meta'],
 				properties: {
 					meta: {
 						type: 'object',
-						required: [ 'username', 'password' ],
+						required: ['username', 'password'],
 						properties: {
 							username: {
 								type: 'string',

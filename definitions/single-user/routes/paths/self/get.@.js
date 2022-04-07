@@ -1,10 +1,18 @@
+/*DOCS
+
+Get the user object of the logged-in user.
+
+- `request.controller.user.getSelf: (request: Request) => { user: User }`
+
+DOCS*/
+
 export const summary = 'Get User'
 
 export const description = `
 Fetch the logged-in user's \`user\` resource, authenticating with the session cookie.
 `
 
-export const tags = [ 'singleUser' ]
+export const tags = ['singleUser']
 
 export const security = [
 	{ cookie: [] },

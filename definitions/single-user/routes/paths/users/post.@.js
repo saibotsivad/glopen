@@ -1,10 +1,18 @@
+/*DOCS
+
+Create a new user.
+
+- `request.controller.user.create: (request: Request) => { user: User, cookie?: String }`
+
+DOCS*/
+
 export const summary = 'Create User'
 
 export const description = `
 Create a user by providing an email address. If the user already exists, return an error.
 `
 
-export const tags = [ 'singleUser' ]
+export const tags = ['singleUser']
 
 export const requestBody = {
 	description: 'Create a new user.',

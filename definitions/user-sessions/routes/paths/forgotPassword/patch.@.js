@@ -1,3 +1,11 @@
+/*DOCS
+
+Use emailed single-use secret to finalize password reset.
+
+- `request.controller.user.resetPasswordUnauthorizedFinalize: (request: Request) => { cookie?: String } | undefined`
+
+DOCS*/
+
 export const summary = 'Finalize Password Reset'
 
 export const description = `
@@ -13,7 +21,7 @@ On finalization success, the API *may* also create a session and return a sessio
 that future requests are authenticated.
 `
 
-export const tags = [ 'userSessions' ]
+export const tags = ['userSessions']
 
 export const requestBody = {
 	description: 'Finalize a password reset request.',
@@ -21,11 +29,11 @@ export const requestBody = {
 		'application/json': {
 			schema: {
 				type: 'object',
-				required: [ 'meta' ],
+				required: ['meta'],
 				properties: {
 					meta: {
 						type: 'object',
-						required: [ 'token', 'password' ],
+						required: ['token', 'password'],
 						properties: {
 							token: {
 								type: 'string',
