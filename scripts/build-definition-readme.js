@@ -19,7 +19,6 @@ const getJavascriptDocsComment = string => {
 
 const dirs = await readdir('./definitions', { withFileTypes: true })
 	.then(list => list.filter(l => l.isDirectory()).map(l => l.name))
-	// temp
 	.then(list => list.filter(l => l !== '_shared'))
 
 console.log(`Generating documentation for ${dirs.length} directories:`)
@@ -31,12 +30,6 @@ for (const dir of dirs) {
 	const openapi = []
 	const routes = []
 	for (const file of files) {
-		const string = await readFile(join('./definitions', dir, file), 'utf8')
-		const { grouping, description } = getJavascriptDocsComment(string)
-		if (!description) {
-			// TODO every file should have some description, I think?
-			// if so, exit here if one is not found
-		}
 		if (file.startsWith('openapi') && file !== 'openapi/tags.@.js') {
 			let grouping
 			let name
@@ -52,9 +45,14 @@ for (const dir of dirs) {
 				grouping,
 				name,
 				file,
-				description,
 			})
-		} else if (file !== 'openapi/tags.@.js') {
+		} else if (file.startsWith('routes')) {
+			const string = await readFile(join('./definitions', dir, file), 'utf8')
+			const { grouping, description } = getJavascriptDocsComment(string)
+			if (!description) {
+				console.log('Found a definition route file with no description.', { dir, file })
+				process.exit(1)
+			}
 			const [, , ...route] = file.split(sep)
 			const method = route.pop().replace('.@.js', '').toUpperCase()
 			routes.push({

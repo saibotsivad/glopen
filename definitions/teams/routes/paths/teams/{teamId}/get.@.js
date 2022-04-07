@@ -1,5 +1,9 @@
 /*DOCS
 
+Fetch a single team, if the requesting user is allowed to see it.
+
+- `request.controller.team.get: (request: Request) => { team: Team }`
+
 DOCS*/
 
 export const summary = 'Get Team'
