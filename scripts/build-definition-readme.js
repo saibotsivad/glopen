@@ -20,9 +20,11 @@ const getJavascriptDocsComment = string => {
 const dirs = await readdir('./definitions', { withFileTypes: true })
 	.then(list => list.filter(l => l.isDirectory()).map(l => l.name))
 	// temp
-	.then(list => list.filter(l => l === 'user-tasks'))
+	.then(list => list.filter(l => l !== '_shared'))
 
+console.log(`Generating documentation for ${dirs.length} directories:`)
 for (const dir of dirs) {
+	console.log(`- ${dir}`)
 	const readme = await readFile(join('./definitions', dir, '_README.md'), 'utf8')
 	const exampleConfig = await readFile(join('./definitions', dir, 'example-glopen.config.js'), 'utf8')
 	const files = await glob('**/*.@.js', { cwd: join('./definitions', dir) })
@@ -35,9 +37,7 @@ for (const dir of dirs) {
 			// TODO every file should have some description, I think?
 			// if so, exit here if one is not found
 		}
-		if (file === 'openapi/tags.@.js') {
-			// TODO
-		} else if (file.startsWith('openapi')) {
+		if (file.startsWith('openapi') && file !== 'openapi/tags.@.js') {
 			let grouping
 			let name
 			if (file.startsWith('openapi/components')) {
@@ -54,7 +54,7 @@ for (const dir of dirs) {
 				file,
 				description,
 			})
-		} else {
+		} else if (file !== 'openapi/tags.@.js') {
 			const [, , ...route] = file.split(sep)
 			const method = route.pop().replace('.@.js', '').toUpperCase()
 			routes.push({

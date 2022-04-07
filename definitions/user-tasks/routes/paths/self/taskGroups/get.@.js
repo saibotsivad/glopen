@@ -49,18 +49,7 @@ export const responses = {
 	},
 }
 
-/**
- * @typedef {import("./get").UserTasksSelfTaskGroupsGet} req
- */
-
-/**
- * Request handler
- * @param {req} request - The request with all params.
- */
 export default async request => {
-	const { user } = await request.controller.user.getSelf(request)
-	// TODO remove this
-	console.log('the user is not needed in this route but it is here for me to test', user)
 	const { taskGroups } = await request.controller.taskGroup.list(request)
 	return {
 		status: 200,
