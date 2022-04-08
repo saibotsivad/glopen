@@ -30,7 +30,7 @@ for (const dir of dirs) {
 	const openapi = []
 	const routes = []
 	for (const file of files) {
-		if (file.startsWith('openapi') && file !== 'openapi/tags.@.js') {
+		if (file.startsWith('openapi') && !file.startsWith('openapi/paths') && file !== 'openapi/tags.@.js') {
 			let grouping
 			let name
 			if (file.startsWith('openapi/components')) {
@@ -46,7 +46,7 @@ for (const dir of dirs) {
 				name,
 				file,
 			})
-		} else if (file.startsWith('routes')) {
+		} else if (file.startsWith('openapi/paths')) {
 			const string = await readFile(join('./definitions', dir, file), 'utf8')
 			const { grouping, description } = getJavascriptDocsComment(string)
 			if (!description) {
