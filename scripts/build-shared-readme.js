@@ -23,7 +23,7 @@ const typeToFile = files.reduce((map, file) => {
 	return map
 }, {})
 
-const readme = await readFile(join('./definitions', '_shared', '_README.md'), 'utf8')
+const readme = await readFile(join('./definitions', '_shared', '.generator', '_README.md'), 'utf8')
 
 const string = readme + '\n' + Object
 	.keys(typeToFile)

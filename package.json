@@ -7,7 +7,11 @@
   "scripts": {
     "clean": "pnpm run clean -r && rm -rf node_modules",
     "test": "pnpm run test -r",
-    "build": "pnpm run build -r",
+    "prebuild": "run-p prebuild:*",
+    "prebuild:definition-readme": "node scripts/build-definition-readme.js",
+    "prebuild:shared-readme": "node scripts/build-shared-readme.js",
+    "build": "pnpm run prebuild && run-p build:*",
+    "build:recursive": "pnpm run build -r --if-present",
     "deploy": "pnpm run deploy -r",
     "old": "-----------------------",
     "build-demo": "mkdir -p example/build && node bin.js -c",
@@ -29,5 +33,8 @@
     "eslint": "^8.1.0",
     "rimraf": "^3.0.2",
     "tiny-glob": "^0.2.9"
+  },
+  "dependencies": {
+    "npm-run-all": "^4.1.5"
   }
 }

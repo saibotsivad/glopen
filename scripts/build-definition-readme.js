@@ -24,7 +24,7 @@ const dirs = await readdir('./definitions', { withFileTypes: true })
 console.log(`Generating documentation for ${dirs.length} directories:`)
 for (const dir of dirs) {
 	console.log(`- ${dir}`)
-	const readme = await readFile(join('./definitions', dir, '_README.md'), 'utf8')
+	const readme = await readFile(join('./definitions', dir, '.generator', '_README.md'), 'utf8')
 	const exampleConfig = await readFile(join('./definitions', dir, 'example-glopen.config.js'), 'utf8')
 	const files = await glob('**/*.@.js', { cwd: join('./definitions', dir) })
 	const openapi = []
