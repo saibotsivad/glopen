@@ -24,6 +24,6 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - run: npm ci
     - run: npm run test
-    - run: npm run build
+    - run: npm run make
       env:
         STAGE: local
