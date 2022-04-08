@@ -14,4 +14,3 @@ globbed-*.js
 # built things
 /dist
 /example/build
-/definitions/*/README.md
