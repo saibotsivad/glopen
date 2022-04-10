@@ -1,7 +1,3 @@
 {
-	"name": "@saibotsivad/glopen-definitions-single-user",
-	"description": "Routes and OpenAPI definitions for single-user functionality.",
-	"keywords": [
-		"users"
-	]
+	"description": "Routes and OpenAPI definitions for single-user functionality."
 }
