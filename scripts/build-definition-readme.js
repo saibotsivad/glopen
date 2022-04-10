@@ -2,6 +2,16 @@ import { join, sep, resolve } from 'node:path'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import glob from 'tiny-glob'
 
+const generateReadmeSuffix = dir => `
+## License
+
+This package and all documentation are made available under the
+[Very Open License](http://veryopenlicense.com).
+
+Commercial licenses and paid support are available at
+[DavisTobias.com/contact](https://davistobias.com/contact?package=@saibotsivad/glopen-definition-${dir})
+`
+
 const start = Date.now()
 
 // Example:
@@ -78,7 +88,7 @@ for (const dir of dirs) {
 		map[o.grouping].push(o)
 		return map
 	}, {})
-	let openapiString = 'The OpenAPI parts are:\n\n' + Object
+	let openapiString = '## OpenAPI Definitions\n\n' + Object
 		.keys(groupedOpenapi)
 		.sort()
 		.map(g => groupedOpenapi[g]
@@ -99,7 +109,7 @@ for (const dir of dirs) {
 		map[key].push(r)
 		return map
 	}, {})
-	const routesString = 'The routes are:\n\n' + Object
+	const routesString = '## OpenAPI Routes\n\n' + Object
 		.keys(groupedRoutes)
 		.sort()
 		.map(g => {
@@ -134,6 +144,7 @@ for (const dir of dirs) {
 		+ '- [shared components](../_shared/README.md)'
 		+ '\n\n'
 		+ routesString
+		+ generateReadmeSuffix(dir)
 	await writeFile('.' + sep + join('definitions', dir, 'README.md'), finalString, 'utf8')
 }
 
