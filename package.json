@@ -11,6 +11,7 @@
     "prepare:definition-readme": "node scripts/build-definition-readme.js",
     "prepare:shared-readme": "node scripts/build-shared-readme.js",
     "prepare:copy-license": "node scripts/copy-license-to-folders.js",
+    "prepare:package-jsons": "node scripts/make-package-json-files-consistent.js",
     "make": "pnpm run prepare && run-p make:*",
     "make:recursive": "pnpm run build -r --if-present",
     "deploy": "pnpm run deploy -r",
