@@ -39,7 +39,7 @@ const setup = async () => {
 	if (isSingle) {
 		merge.push({ dir, api, ext })
 	} else if (json) {
-		json = Array.isArray(json) ? json : [ json ]
+		json = Array.isArray(json) ? json : [json]
 		for (let args of json) {
 			try {
 				args = JSON.parse(args)
@@ -55,6 +55,7 @@ const setup = async () => {
 			details = await import(config)
 		} catch (error) {
 			if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error
+			console.log(error)
 			die('Could not locate config file:', config)
 		}
 		if (!details.default.merge || !details.default.merge.length) die('Could not find "merge" in config file, or had zero parts.')

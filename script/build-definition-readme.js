@@ -1,4 +1,4 @@
-import { join, sep, resolve } from 'node:path'
+import { join, sep } from 'node:path'
 import { readdir, readFile, writeFile } from 'node:fs/promises'
 import glob from 'tiny-glob'
 

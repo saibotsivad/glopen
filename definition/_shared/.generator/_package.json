@@ -1,4 +1,4 @@
 {
-	"name": "@saibotsivad/glopen-definitions-shared",
+	"name": "@saibotsivad/glopen-definition-shared",
 	"description": "Shared routes and OpenAPI definitions for the glopen definitions."
 }

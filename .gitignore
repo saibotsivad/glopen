@@ -11,6 +11,7 @@
 # built things
 /*/*/LICENSE.md
 /*/*/README.md
+/*/*/index.js
 /controller/*/package.json
 /definition/*/package.json
 /package/*/package.json
