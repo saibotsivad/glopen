@@ -9,7 +9,7 @@ const typeToName = {
 	securitySchemes: 'Security Schemes',
 }
 
-const files = await glob('**/*.@.js', { cwd: './definitions/_shared' })
+const files = await glob('**/*.@.js', { cwd: './definition/_shared' })
 	.then(l => l.filter(f => f !== 'openapi/_.@.js'))
 
 const typeToFile = files.reduce((map, file) => {
@@ -23,7 +23,7 @@ const typeToFile = files.reduce((map, file) => {
 	return map
 }, {})
 
-const readme = await readFile(join('./definitions', '_shared', '.generator', '_README.md'), 'utf8')
+const readme = await readFile(join('./definition', '_shared', '.generator', '_README.md'), 'utf8')
 
 const string = readme + '\n' + Object
 	.keys(typeToFile)
@@ -37,4 +37,4 @@ const string = readme + '\n' + Object
 	.join('\n\n')
 	+ '\n'
 
-await writeFile(join('./definitions', '_shared', 'README.md'), string, 'utf8')
+await writeFile(join('./definition', '_shared', 'README.md'), string, 'utf8')

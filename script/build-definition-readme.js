@@ -27,16 +27,16 @@ const getJavascriptDocsComment = string => {
 	return { grouping: match[1], description: match[2] }
 }
 
-const dirs = await readdir('./definitions', { withFileTypes: true })
+const dirs = await readdir('./definition', { withFileTypes: true })
 	.then(list => list.filter(l => l.isDirectory()).map(l => l.name))
 	.then(list => list.filter(l => l !== '_shared'))
 
 console.log(`Generating documentation for ${dirs.length} directories:`)
 for (const dir of dirs) {
 	console.log(`- ${dir}`)
-	const readme = await readFile(join('./definitions', dir, '.generator', '_README.md'), 'utf8')
-	const exampleConfig = await readFile(join('./definitions', dir, 'example-glopen.config.js'), 'utf8')
-	const files = await glob('**/*.@.js', { cwd: join('./definitions', dir) })
+	const readme = await readFile(join('./definition', dir, '.generator', '_README.md'), 'utf8')
+	const exampleConfig = await readFile(join('./definition', dir, 'example-glopen.config.js'), 'utf8')
+	const files = await glob('**/*.@.js', { cwd: join('./definition', dir) })
 	const openapi = []
 	const routes = []
 	for (const file of files) {
@@ -57,7 +57,7 @@ for (const dir of dirs) {
 				file,
 			})
 		} else if (file.startsWith('openapi/paths')) {
-			const string = await readFile(join('./definitions', dir, file), 'utf8')
+			const string = await readFile(join('./definition', dir, file), 'utf8')
 			const { grouping, description } = getJavascriptDocsComment(string)
 			if (!description) {
 				console.log('Found a definition route file with no description.', { dir, file })
@@ -77,7 +77,7 @@ for (const dir of dirs) {
 
 	const tagList = []
 	try {
-		const maybeTags = await import('..' + sep + join('definitions', dir, 'openapi', 'tags.@.js'))
+		const maybeTags = await import('..' + sep + join('definition', dir, 'openapi', 'tags.@.js'))
 		tagList.push(...Object.keys(maybeTags))
 	} catch (error) {
 		if (error.code !== 'ERR_MODULE_NOT_FOUND') throw error
@@ -88,7 +88,7 @@ for (const dir of dirs) {
 		map[o.grouping].push(o)
 		return map
 	}, {})
-	let openapiString = '## OpenAPI Definitions\n\n' + Object
+	let openapiString = '## OpenAPI Definition\n\n' + Object
 		.keys(groupedOpenapi)
 		.sort()
 		.map(g => groupedOpenapi[g]
@@ -145,7 +145,7 @@ for (const dir of dirs) {
 		+ '\n\n'
 		+ routesString
 		+ generateReadmeSuffix(dir)
-	await writeFile('.' + sep + join('definitions', dir, 'README.md'), finalString, 'utf8')
+	await writeFile('.' + sep + join('definition', dir, 'README.md'), finalString, 'utf8')
 }
 
 console.log(`Build completed in ${Date.now() - start}ms`)

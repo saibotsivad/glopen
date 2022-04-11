@@ -2,7 +2,7 @@ import { readFile, writeFile } from 'node:fs/promises'
 import { sep, join, resolve } from 'node:path'
 import glob from 'tiny-glob'
 
-const templatePaths = await glob('{controllers,definitions,packages}/*/.generator/_package.json', { dot: true })
+const templatePaths = await glob('{controller,definition,package}/*/.generator/_package.json', { dot: true })
 
 const files = [
 	"openapi",

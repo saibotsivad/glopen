@@ -10,9 +10,9 @@ const getDirs = name => readdir(name, { withFileTypes: true })
 	)
 
 const dirs = await Promise.all([
-	getDirs('controllers'),
-	getDirs('definitions'),
-	getDirs('packages'),
+	getDirs('controller'),
+	getDirs('definition'),
+	getDirs('package'),
 ]).then(all => all.flat())
 
 for (const dir of dirs) {
