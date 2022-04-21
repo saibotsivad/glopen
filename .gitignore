@@ -10,7 +10,7 @@
 
 # built things
 /*/*/LICENSE.md
-/*/*/README.md
+/definition/*/README.md
 /*/*/index.js
 /*/*/dist
 /controller/*/package.json
