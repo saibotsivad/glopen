@@ -1,0 +1,43 @@
+{
+  "name": "glopen-routes-dynamodb",
+  "version": "0.0.0",
+  "description": "Provided as a reference controller example for @saibotsivad/glopen-routes.",
+  "type": "module",
+  "module": "dist/index.js",
+  "unpkg": "dist/index.min.js",
+  "main": "dist/index.cjs",
+  "types": "index.d.ts",
+  "exports": {
+    ".": {
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "scripts": {
+    "test": "uvu src",
+    "build": "bundt src/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "glopen",
+    "dynamodb"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/packages/glopen-controller-dynamodb",
+  "dependencies": {
+    "bundt": "github:saibotsivad/bundt",
+    "uvu": "^0.5.3"
+  }
+}

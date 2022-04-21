@@ -1,5 +1,5 @@
 packages:
-  - 'controllers/**'
-  - 'definitions/**'
-  - 'examples/**'
-  - 'packages/**'
+  - 'controller/**'
+  - 'definition/**'
+  - 'example/**'
+  - 'package/**'
