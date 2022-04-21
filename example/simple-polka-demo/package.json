@@ -4,11 +4,12 @@
   "type": "module",
   "scripts": {
     "clean": "rimraf node_modules",
-    "OLD_prepare": "glopen -c"
+    "prepare": "glopen -c"
   },
   "dependencies": {
     "@saibotsivad/glopen-definition-shared": "link:../../definition/_shared",
     "@saibotsivad/glopen-definition-single-user": "link:../../definition/single-user",
-    "glopen": "link:../../package/glopen"
+    "glopen": "link:../../package/glopen",
+    "polka": "^0.5.2"
   }
 }

@@ -12,5 +12,6 @@
 /*/*/LICENSE.md
 /definition/*/README.md
 /*/*/index.js
+/*/*/build
 /*/*/dist
 /definition/*/package.json

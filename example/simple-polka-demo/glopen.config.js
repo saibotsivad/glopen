@@ -5,4 +5,5 @@ export default {
 		...shared(),
 		...singleUser()
 	],
+	output: './build/generated.js',
 }

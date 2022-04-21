@@ -62,6 +62,18 @@ importers:
       '@saibotsivad/glopen-definition-single-user': link:../../definition/single-user
       glopen: link:../../package/glopen
 
+  example/simple-polka-demo:
+    specifiers:
+      '@saibotsivad/glopen-definition-shared': link:../../definition/_shared
+      '@saibotsivad/glopen-definition-single-user': link:../../definition/single-user
+      glopen: link:../../package/glopen
+      polka: ^0.5.2
+    dependencies:
+      '@saibotsivad/glopen-definition-shared': link:../../definition/_shared
+      '@saibotsivad/glopen-definition-single-user': link:../../definition/single-user
+      glopen: link:../../package/glopen
+      polka: 0.5.2
+
   package/glopen:
     specifiers:
       ajv: ^8.6.3
@@ -97,7 +109,6 @@ packages:
   /@arr/every/1.0.1:
     resolution: {integrity: sha512-UQFQ6SgyJ6LX42W8rHCs8KVc0JS0tzVL9ct4XYedJukskYVWTo49tNiMEK9C2HTyarbNiT/RVIRSY82vH+6sTg==}
     engines: {node: '>=4'}
-    dev: true
 
   /@eslint/eslintrc/1.2.1:
     resolution: {integrity: sha512-bxvbYnBPN1Gibwyp6NrpnFzA3YtRL3BBAyEAFVIpNTm2Rn4Vy87GA5M4aSn3InRrlsbX5N0GW7XIx+U4SAEKdQ==}
@@ -133,7 +144,6 @@ packages:
 
   /@polka/url/0.5.0:
     resolution: {integrity: sha512-oZLYFEAzUKyi3SKnXvj32ZCEGH6RDnao7COuCVhDydMS9NrCSVXhM79VaKyP5+Zc33m0QXEd2DN3UkU7OsHcfw==}
-    dev: true
 
   /@saibotsivad/eslint-config-saibotsivad/0.0.4_eslint@8.12.0:
     resolution: {integrity: sha512-NEDSazIU/qRRUUadgBmLq331nrDf8YEeDUB5BnZsIQSGogi+S38vledMXfH/35I92c74gRTgBxkzcpeajYUgsQ==}
@@ -904,7 +914,6 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       '@arr/every': 1.0.1
-    dev: true
 
   /media-typer/0.3.0:
     resolution: {integrity: sha1-hxDXrwqmJvj/+hzgAWhUUmMlV0g=}
@@ -1083,7 +1092,6 @@ packages:
     dependencies:
       '@polka/url': 0.5.0
       trouter: 2.0.1
-    dev: true
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -1367,7 +1375,6 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       matchit: 1.1.0
-    dev: true
 
   /type-check/0.4.0:
     resolution: {integrity: sha512-XleUoc9uwGXqjWwXaUTZAmzMcFZ5858QA2vvx1Ur5xIcixXIP+8LnFDgRplU30us6teqdlskFfu+ae4K79Ooew==}
