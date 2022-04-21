@@ -39,7 +39,7 @@ const setup = async () => {
 	if (isSingle) {
 		merge.push({ dir, api, ext })
 	} else if (json) {
-		json = Array.isArray(json) ? json : [json]
+		json = Array.isArray(json) ? json : [ json ]
 		for (let args of json) {
 			try {
 				args = JSON.parse(args)
