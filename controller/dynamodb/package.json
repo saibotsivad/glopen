@@ -35,8 +35,8 @@
   "bugs": {
     "url": "https://github.com/saibotsivad/glopen/issues"
   },
-  "homepage": "https://github.com/saibotsivad/glopen/tree/main/packages/glopen-controller-dynamodb",
-  "dependencies": {
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller/dynamodb",
+  "devDependencies": {
     "bundt": "github:saibotsivad/bundt",
     "uvu": "^0.5.3"
   }
