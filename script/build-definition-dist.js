@@ -1,5 +1,5 @@
-import { join, sep } from 'node:path'
-import { readdir, readFile, writeFile } from 'node:fs/promises'
+import { join } from 'node:path'
+import { readdir, mkdir, writeFile } from 'node:fs/promises'
 
 const template = name => `import { dirname, join } from 'node:path'
 import { fileURLToPath } from 'node:url'
@@ -8,7 +8,7 @@ const __dirname = dirname(fileURLToPath(import.meta.url))
 
 export const ${name} = options => ([
 	{
-		dir: join(__dirname, 'openapi'),
+		dir: join(__dirname, '..', 'openapi'),
 		ext: '@',
 		api: options?.api,
 	},
@@ -27,5 +27,6 @@ for (const dir of dirs) {
 			return part
 		})
 		.join('')
-	await writeFile(join('definition', dir, 'index.js'), template(name), 'utf8')
+	await mkdir(join('definition', dir, 'dist'), { recursive: true })
+	await writeFile(join('definition', dir, 'dist', 'index.js'), template(name), 'utf8')
 }
