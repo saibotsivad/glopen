@@ -10,6 +10,10 @@ const getDirs = name => readdir(name, { withFileTypes: true })
 	)
 
 const dirs = await Promise.all([
+	// getDirs('controller-dynamodb'),
+	// getDirs('controller-kv'),
+	getDirs('controller-memory'),
+	// getDirs('controller-mongodb'),
 	getDirs('controller'),
 	getDirs('definition'),
 	getDirs('package'),

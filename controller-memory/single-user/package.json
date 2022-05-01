@@ -1,0 +1,33 @@
+{
+  "name": "@saibotsivad/glopen-controller-memory-single-user",
+  "type": "module",
+  "main": "index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-memory/single-user/README.md",
+  "description": "Glopen-compatible controllers for single-user functionality, backed by an in-memory data store.",
+  "files": [
+    "index.js",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "keywords": [
+    "openapi",
+    "glob",
+    "generator",
+    "glopen",
+    "controller"
+  ]
+}
