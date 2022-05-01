@@ -44,7 +44,7 @@ const makeDefaultPackageJson = ([dir, name]) => {
 	return {
 		name: `@saibotsivad/glopen-${dir}-${name}`,
 		type: 'module',
-		main: 'index.js',
+		main: 'dist/index.js',
 		repository,
 		author,
 		license,
