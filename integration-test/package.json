@@ -1,0 +1,13 @@
+{
+  "name": "@saibotsivad/glopen-integration-test",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf node_modules",
+    "start": "node index.js"
+  },
+  "dependencies": {
+    "@saibotsivad/glopen-mongodb-data-api-httpie": "workspace:^0.0.0",
+    "httpie": "^1.1.2"
+  }
+}

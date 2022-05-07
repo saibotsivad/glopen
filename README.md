@@ -4,7 +4,7 @@ TODO: write all this
 
 ## Folders
 
-The folders explained:
+Each folder may have its own `README.md` file, but here is the high level description of each folder:
 
 ### controller-kv
 
@@ -14,12 +14,10 @@ This has controllers per-functionality that use Cloudflare KV as the datastore.
 
 This has controllers per-functionality that use AWS DynamoDB as the datastore.
 
-### controller-memory
-
-This has controllers that only store data in-memory. Once the server is shut down, all data is lost.
-
-This isn't probably useful other than as a demo.
-
-### controller-mongodb
+### controller-mongodb-data-api
 
 This has controllers per-functionality that use MongoDB Atlas' "Data API" as the datastore.
+
+### integration-test
+
+Although each package may have its own tests, this folder holds the test suites that make sure all controllers, definitions, and packages work together correctly.

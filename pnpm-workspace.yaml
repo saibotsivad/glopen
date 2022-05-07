@@ -1,6 +1,7 @@
 packages:
-  - 'controller-memory/**'
+  - 'controller-*/**'
   - 'controller/**'
   - 'definition/**'
   - 'example/**'
+  - 'integration-test'
   - 'package/**'

@@ -1,10 +1,10 @@
-import { shared } from '@saibotsivad/glopen-definitions-shared'
-import { userTasks } from '@saibotsivad/glopen-definitions-user-tasks'
+import { shared } from '@saibotsivad/glopen-definition-shared'
+import { userTasks } from '@saibotsivad/glopen-definition-user-tasks'
 export default {
-	merge: [
-		...shared(),
-		...userTasks({
-			api: '/api/v1' // optional
-		})
-	],
+    merge: [
+        ...shared(),
+        ...userTasks({
+            api: '/api/v1' // optional
+        })
+    ],
 }

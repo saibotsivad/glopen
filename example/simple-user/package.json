@@ -1,0 +1,22 @@
+{
+  "name": "@saibotsivad/glopen-examples-simple-demo",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "clean": "rimraf node_modules",
+    "prepare": "glopen -c",
+    "start": "node server.js"
+  },
+  "dependencies": {
+    "@saibotsivad/glopen-controller-mongodb-data-api-single-user": "workspace:*",
+    "@saibotsivad/glopen-controller-mongodb-data-api-user-session": "workspace:*",
+    "@saibotsivad/glopen-definition-shared": "link:../../definition/_shared",
+    "@saibotsivad/glopen-definition-single-user": "link:../../definition/single-user",
+    "@saibotsivad/glopen-definition-user-session": "workspace:*",
+    "@saibotsivad/glopen-mongodb-data-api-httpie": "workspace:^0.0.0",
+    "glopen": "link:../../package/glopen",
+    "klona": "^2.0.5",
+    "nanoid": "^3.3.3",
+    "polka": "^0.5.2"
+  }
+}

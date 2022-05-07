@@ -1,12 +1,11 @@
 import { shared } from '@saibotsivad/glopen-definition-shared'
+import { singleUser } from '@saibotsivad/glopen-definition-single-user'
 import { userSession } from '@saibotsivad/glopen-definition-user-session'
-import { userSessions } from '@saibotsivad/glopen-definition-user-sessions'
 export default {
     merge: [
         ...shared(),
+        ...singleUser(),
         ...userSession(),
-        ...userSessions({
-            api: '/api/v1' // optional
-        })
     ],
+    output: './build/generated.js',
 }

@@ -1,10 +1,10 @@
-import { shared } from '@saibotsivad/glopen-definitions-shared'
-import { singleUser } from '@saibotsivad/glopen-definitions-single-user'
+import { shared } from '@saibotsivad/glopen-definition-shared'
+import { singleUser } from '@saibotsivad/glopen-definition-single-user'
 export default {
-	merge: [
-		...shared(),
-		...singleUser({
-			api: '/api/v1' // optional
-		})
-	],
+    merge: [
+        ...shared(),
+        ...singleUser({
+            api: '/api/v1' // optional
+        })
+    ],
 }

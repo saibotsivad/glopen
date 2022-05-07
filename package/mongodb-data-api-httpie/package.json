@@ -1,0 +1,39 @@
+{
+  "name": "@saibotsivad/glopen-mongodb-data-api-httpie",
+  "version": "0.0.0",
+  "description": "A small wrapper on top of the mongodb-data-api library for NodeJS environments.",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "clean": "rimraf node_modules"
+  },
+  "files": [
+    "src",
+    "README.md",
+    "LICENSE.md",
+    "package.json"
+  ],
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "mongodb",
+    "data-api",
+    "httpie"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/mongodb-data-api-httpie",
+  "dependencies": {
+    "@saibotsivad/mongodb": "^0.0.10",
+    "httpie": "^1.1.2"
+  }
+}

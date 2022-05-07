@@ -1,5 +1,5 @@
 {
-  "name": "@saibotsivad/glopen-controller-memory-single-user",
+  "name": "@saibotsivad/glopen-controller-mongodb-data-api-single-user",
   "type": "module",
   "main": "index.js",
   "repository": {
@@ -15,7 +15,7 @@
   "bugs": {
     "url": "https://github.com/saibotsivad/glopen/issues"
   },
-  "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-memory/single-user/README.md",
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-mongodb-data-api/single-user/README.md",
   "description": "Glopen-compatible controllers for single-user functionality, backed by an in-memory data store.",
   "files": [
     "index.js",

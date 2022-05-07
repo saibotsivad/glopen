@@ -7,7 +7,7 @@ const templatePaths = await glob('{controller-*,controller,definition,package}/*
 const files = [
 	"openapi",
 	"example-glopen.config.js",
-	"index.js",
+	"dist",
 	"openapi",
 	"package.json",
 	"LICENSE.md",

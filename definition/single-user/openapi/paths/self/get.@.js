@@ -40,9 +40,6 @@ export const responses = {
 	},
 }
 
-/**
- * @param {import('./get').Request} request
- */
 export default async request => {
 	const { user } = await request.controller.user.getSelf(request)
 	return {

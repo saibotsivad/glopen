@@ -1,5 +1,5 @@
 {
-  "name": "@saibotsivad/glopen-controller-memory-user-sessions",
+  "name": "@saibotsivad/glopen-controller-mongodb-data-api-user-session",
   "type": "module",
   "main": "index.js",
   "repository": {
@@ -15,8 +15,8 @@
   "bugs": {
     "url": "https://github.com/saibotsivad/glopen/issues"
   },
-  "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-memory/user-sessions/README.md",
-  "description": "Glopen-compatible controllers for user-sessions functionality, backed by an in-memory data store.",
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-mongodb-data-api/user-session/README.md",
+  "description": "Glopen-compatible controllers for user-sessions functionality, e.g. log in and out, backed by an in-memory data store.",
   "files": [
     "index.js",
     "package.json",
