@@ -15,14 +15,7 @@ Create a user by providing an email address. If the user already exists, return 
 export const tags = ['singleUser']
 
 export const requestBody = {
-	description: 'Create a new user.',
-	content: {
-		'application/json': {
-			schema: {
-				$ref: '#/components/schemas/user',
-			},
-		},
-	},
+	$ref: '#/components/requestBodies/createUser',
 }
 
 export const responses = {

@@ -1,6 +1,6 @@
 packages:
-  - 'controller-*/**'
-  - 'controller/**'
+  - 'controller-mongodb-data-api/**'
+  - 'controller-shared/**'
   - 'definition/**'
   - 'example/**'
   - 'integration-test'

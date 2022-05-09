@@ -4,6 +4,19 @@ import * as singleUserCtrl from '@saibotsivad/glopen-controller-mongodb-data-api
 import * as userSessionCtrl from '@saibotsivad/glopen-controller-mongodb-data-api-user-session'
 
 import { routes } from './build/generated.js'
+import { exceptionToResult } from './exception-to-result.js'
+
+const configurations = (req, res, next) => {
+	req.configuration = {
+		controller: {
+			user: {
+				create: {
+					setCookie: true,
+				},
+			},
+		},
+	}
+}
 
 const services = (req, res, next) => {
 	req.service = {
@@ -32,6 +45,16 @@ const controllers = (req, res, next) => {
 	next()
 }
 
+const parseBody = async req => new Promise(resolve => {
+	let data = ''
+	req.on('data', chunk => data += chunk)
+	req.on('end', () => resolve(
+		req.headers?.['content-type'] === 'application/json'
+			? JSON.parse(data)
+			: data
+	))
+})
+
 const api = polka()
 api.use(services)
 api.use(controllers)
@@ -42,13 +65,32 @@ routes.forEach(({ handler, exports, method, pathAlt }) => {
 	// here you have access to everything exported in the file, so you
 	// could use that to e.g. secure routes
 	console.log('-', method.toUpperCase(), pathAlt, '\n  ⮑ ', exports.summary)
-	api[method](pathAlt, handler)
-})
+	api[method](pathAlt, async (req, res) => {
+		req.parameters = {
+			path: req.params,
+			query: req.query,
+			header: { ...req.headers }, // TODO normalize
+			cookie: 'TODO',
+		}
+		req.body = await parseBody(req)
 
-// Here we're just adding a simple "hello world" route so we
-// can ping the server and make sure it's running.
-api.get('/', (req, res) => {
-	res.end('Hello world!')
+		// this is just a little wrapper to let the handlers
+		// return simple objects instead of mutating the response
+		let result
+		try {
+			result = await handler(req)
+		} catch (error) {
+			result = exceptionToResult(error)
+		}
+		let { status, body, headers } = result
+		headers = headers || {}
+		if (typeof body === 'object') {
+			body = JSON.stringify(body)
+			headers['Content-Type'] = 'application/json'
+		}
+		res.writeHead(status || 200, headers)
+		res.end(body)
+	})
 })
 
 const port = parseInt(process.env.PORT || 3000, 10)

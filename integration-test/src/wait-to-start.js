@@ -3,8 +3,8 @@ import { get } from 'httpie'
 
 const isApiRunning = async apiUrl => {
 	try {
-		const response = await get(apiUrl)
-		return response.statusCode === 200
+		const response = await get(apiUrl + '/hello')
+		return response.data?.hello === 'world'
 	} catch (error) {
 		if (error.code === 'ECONNREFUSED') return false
 		else throw error
