@@ -5,8 +5,6 @@
   "description": "Mono repo for the glopen CLI and reusable routes and controllers.",
   "type": "module",
   "scripts": {
-    "preinstall": "node script/generate-package-json-files.js",
-    "clean": "pnpm run clean -r --if-present && rimraf definition/*/package.json && rimraf definition/*/README.md && rm -rf node_modules",
     "test": "pnpm run test -r",
     "integration": "run-p --race integration:*",
     "integration:database": "memgo --keys abc123 --apiPort 5013",
@@ -17,6 +15,7 @@
     "prepare:definition-readme": "node script/build-definition-readme.js",
     "prepare:shared-readme": "node script/build-shared-readme.js",
     "prepare:copy-license": "node script/copy-license-to-folders.js",
+    "prepare:normalize-pkg": "node script/normalize-definition-package-json-files.js",
     "make": "pnpm run prepare && run-p make:*",
     "make:recursive": "pnpm run build -r --if-present",
     "old": "-----------------------",

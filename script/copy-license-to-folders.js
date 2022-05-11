@@ -10,13 +10,16 @@ const getDirs = name => readdir(name, { withFileTypes: true })
 	)
 
 const dirs = await Promise.all([
-	// getDirs('controller-dynamodb'),
-	// getDirs('controller-kv'),
 	getDirs('controller-mongodb-data-api'),
-	getDirs('controller'),
 	getDirs('definition'),
+	getDirs('example'),
 	getDirs('package'),
 ]).then(all => all.flat())
+
+dirs.push(...[
+	'controller-shared',
+	'integration-test',
+])
 
 for (const dir of dirs) {
 	writeFile(join(dir, 'LICENSE.md'), LICENSE, 'utf8')
