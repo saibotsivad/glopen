@@ -2,6 +2,7 @@
 /node_modules
 .DS_Store
 /*/*/node_modules
+/integration-test/node_modules
 
 # personal local files
 /configuration.js
@@ -13,4 +14,3 @@
 /definition/*/README.md
 /*/*/build
 /*/*/dist
-/definition/*/package.json

@@ -14,7 +14,6 @@
     "./package.json": "./package.json"
   },
   "scripts": {
-    "clean": "rimraf node_modules",
     "test": "eslint '**/*.js' --fix",
     "prepublishOnly": "npm run build",
     "build": "bundt src/index.js"

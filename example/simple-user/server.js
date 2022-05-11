@@ -56,6 +56,7 @@ const parseBody = async req => new Promise(resolve => {
 })
 
 const api = polka()
+api.use(configurations)
 api.use(services)
 api.use(controllers)
 

@@ -7,3 +7,7 @@ authenticate using the \`POST /sessions\` route, and 2FA if enabled.
 	name: 'SESSION',
 	in: 'cookie',
 }
+
+export const handler = async (request) => {
+	//
+}

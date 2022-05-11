@@ -1,6 +1,7 @@
 /*DOCS
 
-Get the user object of the logged-in user.
+Get the user object of the logged-in user. The route is secured with
+the `cookie` or `api` security schemas.
 
 - `request.controller.user.getSelf: (request: Request) => { user: User }`
 

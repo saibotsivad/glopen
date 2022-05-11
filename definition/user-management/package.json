@@ -1,0 +1,38 @@
+{
+  "name": "@saibotsivad/glopen-definition-user-management",
+  "type": "module",
+  "main": "dist/index.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "license": "SEE LICENSE IN LICENSE.md",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/user-management",
+  "description": "Routes and OpenAPI definitions for administration of users.",
+  "files": [
+    "openapi",
+    "example-glopen.config.js",
+    "dist",
+    "package.json",
+    "LICENSE.md",
+    "README.md"
+  ],
+  "keywords": [
+    "openapi",
+    "glob",
+    "generator",
+    "glopen",
+    "definitions"
+  ],
+  "scripts": {
+    "clean": "rimraf dist && rimraf LICENSE.md"
+  }
+}

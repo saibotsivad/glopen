@@ -31,7 +31,10 @@ importers:
     specifiers: {}
 
   definition/_shared:
-    specifiers: {}
+    specifiers:
+      worktop: ^0.7.3
+    dependencies:
+      worktop: 0.7.3
 
   definition/single-user:
     specifiers: {}
@@ -61,28 +64,7 @@ importers:
     specifiers: {}
 
   example/simple-user:
-    specifiers:
-      '@saibotsivad/glopen-controller-mongodb-data-api-single-user': workspace:*
-      '@saibotsivad/glopen-controller-mongodb-data-api-user-session': workspace:*
-      '@saibotsivad/glopen-definition-shared': link:../../definition/_shared
-      '@saibotsivad/glopen-definition-single-user': link:../../definition/single-user
-      '@saibotsivad/glopen-definition-user-session': workspace:*
-      '@saibotsivad/glopen-mongodb-data-api-httpie': workspace:^0.0.0
-      glopen: link:../../package/glopen
-      klona: ^2.0.5
-      nanoid: ^3.3.3
-      polka: ^0.5.2
-    dependencies:
-      '@saibotsivad/glopen-controller-mongodb-data-api-single-user': link:../../controller-mongodb-data-api/single-user
-      '@saibotsivad/glopen-controller-mongodb-data-api-user-session': link:../../controller-mongodb-data-api/user-session
-      '@saibotsivad/glopen-definition-shared': link:../../definition/_shared
-      '@saibotsivad/glopen-definition-single-user': link:../../definition/single-user
-      '@saibotsivad/glopen-definition-user-session': link:../../definition/user-session
-      '@saibotsivad/glopen-mongodb-data-api-httpie': link:../../package/mongodb-data-api-httpie
-      glopen: link:../../package/glopen
-      klona: 2.0.5
-      nanoid: 3.3.3
-      polka: 0.5.2
+    specifiers: {}
 
   integration-test:
     specifiers:
@@ -137,6 +119,7 @@ packages:
   /@arr/every/1.0.1:
     resolution: {integrity: sha512-UQFQ6SgyJ6LX42W8rHCs8KVc0JS0tzVL9ct4XYedJukskYVWTo49tNiMEK9C2HTyarbNiT/RVIRSY82vH+6sTg==}
     engines: {node: '>=4'}
+    dev: true
 
   /@eslint/eslintrc/1.2.1:
     resolution: {integrity: sha512-bxvbYnBPN1Gibwyp6NrpnFzA3YtRL3BBAyEAFVIpNTm2Rn4Vy87GA5M4aSn3InRrlsbX5N0GW7XIx+U4SAEKdQ==}
@@ -172,6 +155,7 @@ packages:
 
   /@polka/url/0.5.0:
     resolution: {integrity: sha512-oZLYFEAzUKyi3SKnXvj32ZCEGH6RDnao7COuCVhDydMS9NrCSVXhM79VaKyP5+Zc33m0QXEd2DN3UkU7OsHcfw==}
+    dev: true
 
   /@saibotsivad/eslint-config-saibotsivad/0.0.4_eslint@8.12.0:
     resolution: {integrity: sha512-NEDSazIU/qRRUUadgBmLq331nrDf8YEeDUB5BnZsIQSGogi+S38vledMXfH/35I92c74gRTgBxkzcpeajYUgsQ==}
@@ -1211,11 +1195,6 @@ packages:
     resolution: {integrity: sha512-8QADVssbrFjivHWQU7KkMgptGTl6WAcSdlbBPY4uNF+mWr6DGcKrvY2w4FQJoXch7+fKMjj0dRrL75vk3k23OA==}
     engines: {node: '>=6'}
 
-  /klona/2.0.5:
-    resolution: {integrity: sha512-pJiBpiXMbt7dkzXe8Ghj/u4FfXOOa98fPW+bihOJ4SjnoijweJrNThJfd3ifXpXhREjpoF2mZVH1GfS9LV3kHQ==}
-    engines: {node: '>= 8'}
-    dev: false
-
   /koa-body/4.2.0:
     resolution: {integrity: sha512-wdGu7b9amk4Fnk/ytH8GuWwfs4fsB5iNkY8kZPpgQVb04QZSv85T0M8reb+cJmvLE8cjPYvBzRikD3s6qz8OoA==}
     dependencies:
@@ -1328,6 +1307,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       '@arr/every': 1.0.1
+    dev: true
 
   /md5-file/5.0.0:
     resolution: {integrity: sha512-xbEFXCYVWrSx/gEKS1VPlg84h/4L20znVIulKw6kMfmBUAZNAnF00eczz9ICMl+/hjQGo5KSXRxbL/47X3rmMw==}
@@ -1467,12 +1447,6 @@ packages:
   /ms/2.1.2:
     resolution: {integrity: sha512-sGkPx+VjMtmA6MX27oA4FBFELFCZZ4S4XqeGOXCv68tT+jb3vk/RyaKWP0PTKyWtmLSM0b+adUTEvbs1PEaH2w==}
     dev: true
-
-  /nanoid/3.3.3:
-    resolution: {integrity: sha512-p1sjXuopFs0xg+fPASzQ28agW1oHD7xDsd9Xkf3T15H3c/cifrFHVwrh74PdoklAPi+i7MdRsE47vm2r6JoB+w==}
-    engines: {node: ^10 || ^12 || ^13.7 || ^14 || >=15.0.1}
-    hasBin: true
-    dev: false
 
   /natural-compare/1.4.0:
     resolution: {integrity: sha1-Sr6/7tdUHywnrPspvbvRXI1bpPc=}
@@ -1671,6 +1645,7 @@ packages:
     dependencies:
       '@polka/url': 0.5.0
       trouter: 2.0.1
+    dev: true
 
   /prelude-ls/1.2.1:
     resolution: {integrity: sha512-vkcDPrRZo1QZLbn5RLGPpg/WmIQ65qoWWhcGKf/b5eplkkarX0m9z8ppCat4mlOqUsWpyNuYgO3VRyrYHSzX5g==}
@@ -1725,6 +1700,11 @@ packages:
       define-properties: 1.1.4
       functions-have-names: 1.2.3
     dev: true
+
+  /regexparam/2.0.0:
+    resolution: {integrity: sha512-gJKwd2MVPWHAIFLsaYDZfyKzHNS4o7E/v8YmNf44vmeV2e4YfVoDToTOKTvE7ab68cRJ++kLuEXJBaEeJVt5ow==}
+    engines: {node: '>=8'}
+    dev: false
 
   /regexpp/3.2.0:
     resolution: {integrity: sha512-pq2bWo9mVD43nbts2wGv17XLiNLya+GklZ8kaDLV2Z08gDCsGpnKn9BFMepvWuHCbyVvY7J5o5+BVvoQbmlJLg==}
@@ -2045,6 +2025,7 @@ packages:
     engines: {node: '>=6'}
     dependencies:
       matchit: 1.1.0
+    dev: true
 
   /tslib/2.4.0:
     resolution: {integrity: sha512-d6xOpEDfsi2CZVlPQzGeux8XMwLT9hssAsaPYExaQMuYskwb+x1x7J371tWlbBdWHroy99KnVB6qIkUbs5X3UQ==}
@@ -2174,6 +2155,13 @@ packages:
     resolution: {integrity: sha512-Hz/mrNwitNRh/HUAtM/VT/5VH+ygD6DV7mYKZAtHOrbs8U7lvPS6xf7EJKMF0uW1KJCl0H701g3ZGus+muE5vQ==}
     engines: {node: '>=0.10.0'}
     dev: true
+
+  /worktop/0.7.3:
+    resolution: {integrity: sha512-WBHP1hk8pLP7ahAw13fugDWcO0SUAOiCD6DHT/bfLWoCIA/PL9u7GKdudT2nGZ8EGR1APbGCAI6ZzKG1+X+PnQ==}
+    engines: {node: '>=12'}
+    dependencies:
+      regexparam: 2.0.0
+    dev: false
 
   /wrappy/1.0.2:
     resolution: {integrity: sha1-tSQ9jz7BqjXxNkYFvA0QNuMKtp8=}

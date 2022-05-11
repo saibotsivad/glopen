@@ -4,9 +4,6 @@
   "description": "A small wrapper on top of the mongodb-data-api library for NodeJS environments.",
   "type": "module",
   "main": "src/index.js",
-  "scripts": {
-    "clean": "rimraf node_modules"
-  },
   "files": [
     "src",
     "README.md",

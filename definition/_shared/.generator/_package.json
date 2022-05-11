@@ -1,4 +1,7 @@
 {
 	"name": "@saibotsivad/glopen-definition-shared",
-	"description": "Shared routes and OpenAPI definitions for the glopen definitions."
+	"description": "Shared routes and OpenAPI definitions for the glopen definitions.",
+	"dependencies": {
+		"worktop": "^0.7.3"
+	}
 }

@@ -1,0 +1,637 @@
+{
+  "0 debug pnpm:scope": {
+    "selected": 9,
+    "total": 9,
+    "workspacePrefix": "/Users/tobias/Development/git/glopen"
+  },
+  "1 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "glopen",
+      "version": "0.0.0",
+      "private": true,
+      "description": "Mono repo for the glopen CLI and reusable routes and controllers.",
+      "type": "module",
+      "scripts": {
+        "clean": "pnpm run clean -r --if-present && rimraf definition/*/package.json && rimraf definition/*/README.md && rm -rf node_modules",
+        "test": "pnpm run test -r",
+        "integration": "run-p --race integration:*",
+        "integration:database": "memgo --keys abc123 --apiPort 5013",
+        "integration:suite": "export MONGODB_API_KEY=abc123 && export MONGODB_API_URL=http://localhost:5013 && export API_URL=http://localhost:3001 && cd integration-test && pnpm run start",
+        "integration:server": "export MONGODB_API_KEY=abc123 && export MONGODB_API_PORT=5013 && export PORT=3001 && cd example/simple-user && pnpm run start",
+        "prepare": "run-p prepare:*",
+        "prepare:definition-dist": "node script/build-definition-dist.js",
+        "prepare:definition-readme": "node script/build-definition-readme.js",
+        "prepare:shared-readme": "node script/build-shared-readme.js",
+        "prepare:copy-license": "node script/copy-license-to-folders.js",
+        "prepare:package-jsons": "node script/make-package-json-files-consistent.js",
+        "make": "pnpm run prepare && run-p make:*",
+        "make:recursive": "pnpm run build -r --if-present",
+        "old": "-----------------------",
+        "build-demo": "mkdir -p example/build && node bin.js -c",
+        "postbuild-demo": "node example/openapijson.js && ajv-openapi-compile --definition example/build/generated.json --output example/build/schemas.cjs",
+        "start-advanced": "node example/polka-ajv.js"
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen",
+      "devDependencies": {
+        "@saibotsivad/eslint-config-saibotsivad": "^0.0.4",
+        "eslint": "^8.1.0",
+        "memgo": "^1.0.0",
+        "npm-run-all": "^4.1.5",
+        "rimraf": "^3.0.2",
+        "tiny-glob": "^0.2.9"
+      }
+    },
+    "prefix": "/Users/tobias/Development/git/glopen"
+  },
+  "2 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@saibotsivad/glopen-controller-mongodb-data-api-user-session",
+      "type": "module",
+      "main": "index.js",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "author": {
+        "name": "Tobias Davis",
+        "email": "tobias@davistobias.com",
+        "url": "https://davistobias.com"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-mongodb-data-api/user-session/README.md",
+      "description": "Glopen-compatible controllers for user-sessions functionality, e.g. log in and out, backed by an in-memory data store.",
+      "files": [
+        "index.js",
+        "package.json",
+        "LICENSE.md",
+        "README.md"
+      ],
+      "keywords": [
+        "openapi",
+        "glob",
+        "generator",
+        "glopen",
+        "controller"
+      ]
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/controller-mongodb-data-api/user-session"
+  },
+  "3 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@saibotsivad/glopen-controller-shared",
+      "description": "Shared components for the Glopen demo controller libraries.",
+      "type": "module",
+      "main": "index.js",
+      "exports": {
+        ".": {
+          "import": "./index.js"
+        },
+        "./package.json": "./package.json",
+        "./exceptions": {
+          "import": "./exceptions.js"
+        }
+      },
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "author": {
+        "name": "Tobias Davis",
+        "email": "tobias@davistobias.com",
+        "url": "https://davistobias.com"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-shared/README.md",
+      "files": [
+        "index.js",
+        "package.json",
+        "LICENSE.md",
+        "README.md"
+      ],
+      "keywords": [
+        "openapi",
+        "glob",
+        "generator",
+        "glopen",
+        "controller"
+      ]
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/controller-shared"
+  },
+  "4 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "glopen",
+      "version": "0.0.7",
+      "description": "GLobbify OPENapi: Glob folder structures into an OpenAPI definition and API router driver.",
+      "bin": "bin.js",
+      "type": "module",
+      "module": "dist/index.js",
+      "main": "dist/index.cjs",
+      "exports": {
+        ".": {
+          "import": "./dist/index.js",
+          "require": "./dist/index.cjs"
+        },
+        "./package.json": "./package.json"
+      },
+      "scripts": {
+        "clean": "rimraf node_modules && rimraf dist && rm LICENSE.md",
+        "test": "eslint '**/*.js' --fix",
+        "prepublishOnly": "npm run build",
+        "build": "bundt src/index.js"
+      },
+      "files": [
+        "dist",
+        "src",
+        "bin.js",
+        "README.md",
+        "LICENSE.md",
+        "package.json"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "keywords": [
+        "openapi",
+        "glob",
+        "generator",
+        "glopen"
+      ],
+      "author": {
+        "name": "Tobias Davis",
+        "email": "tobias@davistobias.com",
+        "url": "https://davistobias.com"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/glopen",
+      "devDependencies": {
+        "ajv": "^8.6.3",
+        "ajv-formats": "^2.1.1",
+        "ajv-openapi-compile": "^0.0.2",
+        "body-parser": "^1.19.0",
+        "bundt": "^1.1.5",
+        "eslint": "^8.1.0",
+        "polka": "^0.5.2"
+      },
+      "dependencies": {
+        "cheap-watch": "^1.0.4",
+        "mri": "^1.2.0",
+        "tiny-glob": "^0.2.9",
+        "to-js-identifier": "^1.0.0"
+      }
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/package/glopen"
+  },
+  "5 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@saibotsivad/glopen-mongodb-data-api-httpie",
+      "version": "0.0.0",
+      "description": "A small wrapper on top of the mongodb-data-api library for NodeJS environments.",
+      "type": "module",
+      "main": "src/index.js",
+      "scripts": {
+        "clean": "rimraf node_modules && rm LICENSE.md"
+      },
+      "files": [
+        "src",
+        "README.md",
+        "LICENSE.md",
+        "package.json"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "keywords": [
+        "mongodb",
+        "data-api",
+        "httpie"
+      ],
+      "author": {
+        "name": "Tobias Davis",
+        "email": "tobias@davistobias.com",
+        "url": "https://davistobias.com"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/mongodb-data-api-httpie",
+      "dependencies": {
+        "@saibotsivad/mongodb": "^0.0.10",
+        "httpie": "^1.1.2"
+      }
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/package/mongodb-data-api-httpie"
+  },
+  "6 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "recursively-get-files",
+      "version": "0.0.0",
+      "description": "Get full list of files in a folder.",
+      "bin": "bin.js",
+      "type": "module",
+      "module": "dist/index.js",
+      "main": "dist/index.cjs",
+      "exports": {
+        ".": {
+          "import": "./dist/index.js",
+          "require": "./dist/index.cjs"
+        },
+        "./package.json": "./package.json"
+      },
+      "scripts": {
+        "clean": "rimraf node_modules"
+      },
+      "files": [
+        "dist",
+        "src",
+        "bin.js",
+        "README.md",
+        "LICENSE.md",
+        "package.json"
+      ],
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "keywords": [
+        "openapi",
+        "glob",
+        "generator",
+        "glopen"
+      ],
+      "author": {
+        "name": "Tobias Davis",
+        "email": "tobias@davistobias.com",
+        "url": "https://davistobias.com"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/recursively-get-files",
+      "devDependencies": {},
+      "dependencies": {}
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/package/recursively-get-files"
+  },
+  "7 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@saibotsivad/glopen-controller-mongodb-data-api-single-user",
+      "type": "module",
+      "main": "index.js",
+      "repository": {
+        "type": "git",
+        "url": "git+https://github.com/saibotsivad/glopen.git"
+      },
+      "author": {
+        "name": "Tobias Davis",
+        "email": "tobias@davistobias.com",
+        "url": "https://davistobias.com"
+      },
+      "license": "SEE LICENSE IN LICENSE.md",
+      "bugs": {
+        "url": "https://github.com/saibotsivad/glopen/issues"
+      },
+      "homepage": "https://github.com/saibotsivad/glopen/tree/main/controller-mongodb-data-api/single-user/README.md",
+      "description": "Glopen-compatible controllers for single-user functionality, backed by an in-memory data store.",
+      "files": [
+        "index.js",
+        "package.json",
+        "LICENSE.md",
+        "README.md"
+      ],
+      "keywords": [
+        "openapi",
+        "glob",
+        "generator",
+        "glopen",
+        "controller"
+      ],
+      "dependencies": {
+        "@saibotsivad/glopen-controller-shared": "workspace:*"
+      }
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/controller-mongodb-data-api/single-user"
+  },
+  "8 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@saibotsivad/glopen-integration-test",
+      "private": true,
+      "type": "module",
+      "scripts": {
+        "clean": "rimraf node_modules",
+        "start": "node index.js"
+      },
+      "dependencies": {
+        "@saibotsivad/glopen-mongodb-data-api-httpie": "workspace:^0.0.0",
+        "httpie": "^1.1.2",
+        "uvu": "0.5.1"
+      }
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/integration-test"
+  },
+  "9 debug pnpm:package-manifest": {
+    "initial": {
+      "name": "@saibotsivad/glopen-examples-simple-demo",
+      "private": true,
+      "type": "module",
+      "scripts": {
+        "clean": "rimraf node_modules",
+        "prepare": "glopen -c",
+        "start": "node server.js"
+      },
+      "dependencies": {
+        "@saibotsivad/glopen-controller-mongodb-data-api-single-user": "workspace:*",
+        "@saibotsivad/glopen-controller-mongodb-data-api-user-session": "workspace:*",
+        "@saibotsivad/glopen-definition-shared": "workspace:*",
+        "@saibotsivad/glopen-definition-single-user": "workspace:*",
+        "@saibotsivad/glopen-definition-user-session": "workspace:*",
+        "@saibotsivad/glopen-mongodb-data-api-httpie": "workspace:*",
+        "glopen": "workspace:*",
+        "klona": "^2.0.5",
+        "nanoid": "^3.3.3",
+        "polka": "^0.5.2"
+      }
+    },
+    "prefix": "/Users/tobias/Development/git/glopen/example/simple-user"
+  },
+  "10 debug pnpm:context": {
+    "currentLockfileExists": false,
+    "storeDir": "/Users/tobias/.pnpm-store/v3",
+    "virtualStoreDir": "/Users/tobias/Development/git/glopen/node_modules/.pnpm"
+  },
+  "11 debug pnpm:stage": {
+    "prefix": "/Users/tobias/Development/git/glopen",
+    "stage": "resolution_started"
+  },
+  "12 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@saibotsivad/eslint-config-saibotsivad/0.0.4",
+    "wanted": {
+      "dependentId": ".",
+      "name": "@saibotsivad/eslint-config-saibotsivad",
+      "rawSpec": "^0.0.4"
+    }
+  },
+  "13 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint/8.12.0",
+    "wanted": {
+      "dependentId": ".",
+      "name": "eslint",
+      "rawSpec": "^8.1.0"
+    }
+  },
+  "14 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/memgo/1.0.0",
+    "wanted": {
+      "dependentId": ".",
+      "name": "memgo",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "15 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/npm-run-all/4.1.5",
+    "wanted": {
+      "dependentId": ".",
+      "name": "npm-run-all",
+      "rawSpec": "^4.1.5"
+    }
+  },
+  "16 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/rimraf/3.0.2",
+    "wanted": {
+      "dependentId": ".",
+      "name": "rimraf",
+      "rawSpec": "^3.0.2"
+    }
+  },
+  "17 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/tiny-glob/0.2.9",
+    "wanted": {
+      "dependentId": ".",
+      "name": "tiny-glob",
+      "rawSpec": "^0.2.9"
+    }
+  },
+  "18 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ajv/8.11.0",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "ajv",
+      "rawSpec": "^8.6.3"
+    }
+  },
+  "19 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ajv-formats/2.1.1",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "ajv-formats",
+      "rawSpec": "^2.1.1"
+    }
+  },
+  "20 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/ajv-openapi-compile/0.0.2",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "ajv-openapi-compile",
+      "rawSpec": "^0.0.2"
+    }
+  },
+  "21 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/body-parser/1.20.0",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "body-parser",
+      "rawSpec": "^1.19.0"
+    }
+  },
+  "22 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/bundt/1.1.5",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "bundt",
+      "rawSpec": "^1.1.5"
+    }
+  },
+  "23 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/eslint/8.12.0",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "eslint",
+      "rawSpec": "^8.1.0"
+    }
+  },
+  "24 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/polka/0.5.2",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "polka",
+      "rawSpec": "^0.5.2"
+    }
+  },
+  "25 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/cheap-watch/1.0.4",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "cheap-watch",
+      "rawSpec": "^1.0.4"
+    }
+  },
+  "26 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/mri/1.2.0",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "mri",
+      "rawSpec": "^1.2.0"
+    }
+  },
+  "27 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/tiny-glob/0.2.9",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "tiny-glob",
+      "rawSpec": "^0.2.9"
+    }
+  },
+  "28 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/to-js-identifier/1.0.0",
+    "wanted": {
+      "dependentId": "package/glopen",
+      "name": "to-js-identifier",
+      "rawSpec": "^1.0.0"
+    }
+  },
+  "29 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/@saibotsivad/mongodb/0.0.10",
+    "wanted": {
+      "dependentId": "package/mongodb-data-api-httpie",
+      "name": "@saibotsivad/mongodb",
+      "rawSpec": "^0.0.10"
+    }
+  },
+  "30 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/httpie/1.1.2",
+    "wanted": {
+      "dependentId": "package/mongodb-data-api-httpie",
+      "name": "httpie",
+      "rawSpec": "^1.1.2"
+    }
+  },
+  "31 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/httpie/1.1.2",
+    "wanted": {
+      "dependentId": "integration-test",
+      "name": "httpie",
+      "rawSpec": "^1.1.2"
+    }
+  },
+  "32 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/uvu/0.5.1",
+    "wanted": {
+      "dependentId": "integration-test",
+      "name": "uvu",
+      "rawSpec": "0.5.1"
+    }
+  },
+  "33 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/klona/2.0.5",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "klona",
+      "rawSpec": "^2.0.5"
+    }
+  },
+  "34 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/nanoid/3.3.3",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "nanoid",
+      "rawSpec": "^3.3.3"
+    }
+  },
+  "35 debug pnpm:_dependency_resolved": {
+    "resolution": "registry.npmjs.org/polka/0.5.2",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "polka",
+      "rawSpec": "^0.5.2"
+    }
+  },
+  "36 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../controller-shared",
+    "wanted": {
+      "dependentId": "controller-mongodb-data-api/single-user",
+      "name": "@saibotsivad/glopen-controller-shared",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "37 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../package/mongodb-data-api-httpie",
+    "wanted": {
+      "dependentId": "integration-test",
+      "name": "@saibotsivad/glopen-mongodb-data-api-httpie",
+      "rawSpec": "workspace:^0.0.0"
+    }
+  },
+  "38 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../controller-mongodb-data-api/single-user",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "@saibotsivad/glopen-controller-mongodb-data-api-single-user",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "39 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../controller-mongodb-data-api/user-session",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "@saibotsivad/glopen-controller-mongodb-data-api-user-session",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "40 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../package/mongodb-data-api-httpie",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "@saibotsivad/glopen-mongodb-data-api-httpie",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "41 debug pnpm:_dependency_resolved": {
+    "resolution": "link:../../package/glopen",
+    "wanted": {
+      "dependentId": "example/simple-user",
+      "name": "glopen",
+      "rawSpec": "workspace:*"
+    }
+  },
+  "42 error pnpm": {
+    "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+    "pkgsStack": [],
+    "err": {
+      "name": "pnpm",
+      "message": "In example/simple-user: No matching version found for @saibotsivad/glopen-definition-shared@* inside the workspace",
+      "code": "ERR_PNPM_NO_MATCHING_VERSION_INSIDE_WORKSPACE",
+      "stack": "pnpm: In example/simple-user: No matching version found for @saibotsivad/glopen-definition-shared@* inside the workspace\n    at tryResolveFromWorkspace (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:86100:15)\n    at resolveNpm (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:85991:39)\n    at Object.resolve (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:86223:40)\n    at ctx.requestsQueue.add.priority (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:74577:75)\n    at run (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:74293:90)\n    at PQueue._tryToStartAnother (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:74247:13)\n    at /Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:74306:16\n    at new Promise (<anonymous>)\n    at PQueue.add (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:74288:16)\n    at resolveAndFetch (/Users/tobias/.nvm/versions/node/v16.13.2/pnpm-global/5/node_modules/.pnpm/pnpm@6.32.9/node_modules/pnpm/dist/pnpm.cjs:74577:55)"
+    }
+  }
+}
