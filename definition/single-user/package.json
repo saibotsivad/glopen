@@ -1,22 +1,9 @@
 {
   "name": "@saibotsivad/glopen-definition-single-user",
+  "description": "Routes and OpenAPI definitions for single-user functionality.",
+  "license": "SEE LICENSE IN LICENSE.md",
   "type": "module",
   "main": "dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saibotsivad/glopen.git"
-  },
-  "author": {
-    "name": "Tobias Davis",
-    "email": "tobias@davistobias.com",
-    "url": "https://davistobias.com"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "bugs": {
-    "url": "https://github.com/saibotsivad/glopen/issues"
-  },
-  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/single-user",
-  "description": "Routes and OpenAPI definitions for single-user functionality.",
   "files": [
     "openapi",
     "example-glopen.config.js",
@@ -31,5 +18,18 @@
     "generator",
     "glopen",
     "definitions"
-  ]
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/single-user",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  }
 }

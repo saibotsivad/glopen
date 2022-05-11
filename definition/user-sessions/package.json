@@ -1,22 +1,9 @@
 {
   "name": "@saibotsivad/glopen-definition-user-sessions",
+  "description": "Routes and OpenAPI definitions for users to manage sessions.",
+  "license": "SEE LICENSE IN LICENSE.md",
   "type": "module",
   "main": "dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saibotsivad/glopen.git"
-  },
-  "author": {
-    "name": "Tobias Davis",
-    "email": "tobias@davistobias.com",
-    "url": "https://davistobias.com"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "bugs": {
-    "url": "https://github.com/saibotsivad/glopen/issues"
-  },
-  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/user-sessions",
-  "description": "Routes and OpenAPI definitions for users to manage sessions.",
   "files": [
     "openapi",
     "example-glopen.config.js",
@@ -32,7 +19,17 @@
     "glopen",
     "definitions"
   ],
-  "scripts": {
-    "clean": "rimraf dist && rimraf LICENSE.md"
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/user-sessions",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
   }
 }

@@ -1,25 +1,9 @@
 {
   "name": "@saibotsivad/glopen-definition-shared",
+  "description": "Shared routes and OpenAPI definitions for the glopen definitions.",
+  "license": "SEE LICENSE IN LICENSE.md",
   "type": "module",
   "main": "dist/index.js",
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/saibotsivad/glopen.git"
-  },
-  "author": {
-    "name": "Tobias Davis",
-    "email": "tobias@davistobias.com",
-    "url": "https://davistobias.com"
-  },
-  "license": "SEE LICENSE IN LICENSE.md",
-  "bugs": {
-    "url": "https://github.com/saibotsivad/glopen/issues"
-  },
-  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/_shared",
-  "description": "Shared routes and OpenAPI definitions for the glopen definitions.",
-  "dependencies": {
-    "worktop": "^0.7.3"
-  },
   "files": [
     "openapi",
     "example-glopen.config.js",
@@ -34,5 +18,21 @@
     "generator",
     "glopen",
     "definitions"
-  ]
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/definition/_shared",
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "dependencies": {
+    "worktop": "^0.7.3"
+  }
 }
