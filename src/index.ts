@@ -1,3 +1,5 @@
+import { GlopenParams, GlopenOutput, GlopenMerge } from '../index.d'
+
 import fs from 'node:fs/promises'
 import path from 'node:path'
 
@@ -18,7 +20,7 @@ const loadMarkdownFile = async part => fs
 const loadAllMarkdownFiles = async files => Promise
 	.all(files.map(loadMarkdownFile))
 	.then(loaded => {
-		const markdownDetails = {}
+		const markdownDetails = Object.create(null)
 		const markdownImportLines = []
 		if (loaded.length) markdownImportLines.push('// imported markdown files')
 		for (const { dir, file, id, string } of loaded) {
@@ -89,8 +91,8 @@ const generatePathParts = javascriptDetails => {
 		})
 	if (!pathDetails.length) return []
 
-	const pathObjectMap = {}
-	const pathItemObjectMap = {}
+	const pathObjectMap = Object.create(null)
+	const pathItemObjectMap = Object.create(null)
 	const routes = []
 	for (const { name: method, file, id, pathKey, markdown } of pathDetails) {
 		if (method === '_') {
@@ -151,7 +153,7 @@ const generatePathParts = javascriptDetails => {
 }
 
 const generateTagLines = async javascriptDetails => {
-	const tags = {}
+	const tags = Object.create(null)
 	for (const part of javascriptDetails.filter(({ name }) => name === 'tags')) {
 		const imported = await import(path.join(part.dir, part.file))
 		for (const tag in imported) {
@@ -180,7 +182,14 @@ const generateTagLines = async javascriptDetails => {
 		: []
 }
 
-const getAllGlobbed = async mergeList => {
+interface GlobbedFile extends GlopenMerge {
+	abs: string; // the absolute filepath
+	file: string; // the relative filepath
+	name: string; // the ... filename keypath thing?
+	id: string; // the absolute filepath, sanitized into a JS identifier
+}
+
+async function getAllGlobbed (mergeList: Array<GlopenMerge>) : Promise<{ globbedJs: GlobbedFile, globbedMd: GlobbedFile }> {
 	const globbed = []
 	for (const merge of mergeList) {
 		const files = await tinyGlob(`${merge.dir}/**/*.${merge.ext || DEFAULT_EXTENSION_PREFIX}.{js,md}`, { cwd: merge.dir })
@@ -190,8 +199,8 @@ const getAllGlobbed = async mergeList => {
 			globbed.push(part)
 		}
 	}
-	const globbedJs = []
-	const globbedMd = []
+	const globbedJs: Array<GlobbedFile> = []
+	const globbedMd: Array<GlobbedFile> = []
 	for (const part of globbed) {
 		part.name = part.file.split('/').pop().split('.').slice(0, -2).join('.')
 		part.id = toJsIdentifier(part.abs)
@@ -201,7 +210,7 @@ const getAllGlobbed = async mergeList => {
 	return { globbedJs, globbedMd }
 }
 
-export const glopen = async ({ openapi, merge }) => {
+export async function glopen ({ openapi, merge }: GlopenParams) : Promise<GlopenOutput> {
 	if (!merge || !merge.length) throw new Error('No merge parts set.')
 	if (merge.find(part => !part.dir)) throw new Error('No directory set on one or more parts.')
 

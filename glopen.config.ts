@@ -11,5 +11,5 @@ export default {
 			ext: '$',
 		},
 	],
-	output: 'example/build/generated.js',
+	output: 'example/build/generated.ts',
 }

@@ -4,6 +4,7 @@
   "description": "GLobbify OPENapi: Glob folder structures into an OpenAPI definition and API driver.",
   "bin": "bin.js",
   "type": "module",
+  "types": "index.d.ts",
   "module": "dist/index.js",
   "main": "dist/index.cjs",
   "exports": {
@@ -51,6 +52,7 @@
   },
   "homepage": "https://github.com/saibotsivad/glopen",
   "devDependencies": {
+    "@types/node": "^17.0.14",
     "ajv": "^8.6.3",
     "ajv-formats": "^2.1.1",
     "ajv-openapi-compile": "^0.0.2",
@@ -62,6 +64,7 @@
   "dependencies": {
     "cheap-watch": "^1.0.4",
     "mri": "^1.2.0",
+    "sade": "^1.8.1",
     "tiny-glob": "^0.2.9",
     "to-js-identifier": "^1.0.0"
   }
