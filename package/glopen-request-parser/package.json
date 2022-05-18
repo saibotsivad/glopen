@@ -1,0 +1,35 @@
+{
+  "name": "glopen-request-parser",
+  "version": "0.0.0",
+  "description": "Parse an incoming request into the defined OpenAPI parameters.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "glopen",
+    "openapi",
+    "parser"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/glopen-request-parser",
+  "devDependencies": {
+    "uvu": "^0.5.1"
+  },
+  "dependencies": {
+    "worktop": "^0.7.3"
+  }
+}

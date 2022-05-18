@@ -1,0 +1,31 @@
+{
+  "name": "openapi-exception-formatter",
+  "version": "1.0.0",
+  "description": "Secure a request using OpenAPI security definitions.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "openapi",
+    "security"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/openapi-exception-formatter",
+  "devDependencies": {
+    "uvu": "^0.5.1"
+  }
+}

@@ -37,6 +37,7 @@ const generateImportLines = globbedJs => {
 	for (const part of globbedJs) {
 		const importName = quoteString(path.join(part.dir, part.file))
 		if (NAMES_WITH_NO_DEFAULT.includes(part.name)) importLines.push(`import * as ${part.id} from ${importName}`)
+		else if (part.path === 'components/securitySchemes') importLines.push(`import ${part.id}_handler, * as ${part.id} from ${importName}`)
 		else if (part.path.startsWith('paths/') && NAMES_REQUIRING_HANDLERS.includes(part.name)) importLines.push(`import ${part.id}_handler, * as ${part.id} from ${importName}`)
 		else importLines.push(`import ${part.id} from ${importName}`)
 	}
@@ -248,8 +249,14 @@ export const glopen = async ({ openapi, merge }) => {
 
 	lines.push('}')
 
+	const securitySchemaExports = javascriptDetails
+		.filter(d => d.path === 'components/securitySchemes')
+		.map(d => `\t${d.name}: ${d.id}_handler,`)
+		.join('\n')
+
 	return {
 		definition: lines.join('\n'),
 		routes: 'export const routes = [\n' + pathParts.routeLines.join('\n') + '\n]\n',
+		securities: 'export const securities = {\n' + securitySchemaExports + '\n}\n',
 	}
 }

@@ -22,6 +22,7 @@ const mongodb = mongodbDataApi({
 
 console.log('Waiting for the MongoDB Data API and API to start...')
 await waitToStart({ apiUrl, mongodb })
+console.log('Everything is started, running integration test suites.')
 
 const state = {}
 

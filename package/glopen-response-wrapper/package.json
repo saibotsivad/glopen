@@ -1,0 +1,35 @@
+{
+  "name": "glopen-response-wrapper",
+  "version": "0.0.0",
+  "description": "Simple route wrapper to make it easier to manage Glopen responses.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "glopen",
+    "handler",
+    "wrapper"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/glopen-response-wrapper",
+  "devDependencies": {
+    "uvu": "^0.5.1"
+  },
+  "dependencies": {
+    "openapi-exception-formatter": "workspace:^1.0.0"
+  }
+}

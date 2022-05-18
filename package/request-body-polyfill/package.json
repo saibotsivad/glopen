@@ -1,0 +1,31 @@
+{
+  "name": "request-body-polyfill",
+  "version": "0.0.0",
+  "description": "Simple polyfill to add the .json() and .text() methods to requests in NodeJS.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "openapi",
+    "security"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/request-body-polyfill",
+  "devDependencies": {
+    "uvu": "^0.5.1"
+  }
+}

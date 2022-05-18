@@ -1,0 +1,37 @@
+{
+  "name": "mariachi",
+  "version": "0.0.0",
+  "description": "A router heavily inspired by Polka.",
+  "license": "SEE LICENSE IN LICENSE.md",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "node tests.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/saibotsivad/glopen.git"
+  },
+  "keywords": [
+    "glopen",
+    "handler",
+    "wrapper"
+  ],
+  "author": {
+    "name": "Tobias Davis",
+    "email": "tobias@davistobias.com",
+    "url": "https://davistobias.com"
+  },
+  "bugs": {
+    "url": "https://github.com/saibotsivad/glopen/issues"
+  },
+  "homepage": "https://github.com/saibotsivad/glopen/tree/main/package/mariachi",
+  "devDependencies": {
+    "uvu": "^0.5.1"
+  },
+  "dependencies": {
+    "@polka/url": "^0.5.0",
+    "querystring": "^0.2.1",
+    "trouter": "^3.2.0"
+  }
+}

@@ -2,8 +2,13 @@ export const summary = 'Hello World!'
 
 export const description = `
 An example of an additional route, and also used by the integration
-test suite to make sure the server is running.
+test suite to make sure the server is running. The path value is echoed
+back on the response.
 `
+
+export const parameters = [
+	{ $ref: '#/components/parameters/name' },
+]
 
 export const responses = {
 	200: {
@@ -29,6 +34,6 @@ export const responses = {
 export default async request => {
 	return {
 		status: 200,
-		body: { hello: 'world' },
+		body: { hello: request.openapi.path.name },
 	}
 }

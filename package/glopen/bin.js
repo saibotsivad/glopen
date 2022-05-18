@@ -70,7 +70,7 @@ const setup = async () => {
 }
 
 const build = async parts => {
-	const { definition, routes } = await glopen({
+	const { definition, routes, securities } = await glopen({
 		openapi,
 		merge: parts.map(({ dir, api, ext }) => ({
 			api,
@@ -78,7 +78,7 @@ const build = async parts => {
 			dir: absResolve(dir),
 		})),
 	})
-	const string = definition + '\n\n' + routes
+	let string = definition + '\n\n' + routes + '\n\n' + securities
 	if (output) {
 		const outdir = path.dirname(output)
 		await fs.mkdir(outdir, { recursive: true })
