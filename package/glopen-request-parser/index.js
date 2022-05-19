@@ -52,14 +52,21 @@ const parseRequest = async ({ definition, pathPatternKey, pathParametersKey, req
 	const openapi = {
 		path: {},
 		query: {},
-		header: {},
 		cookie: {},
-		// path: request[pathParametersKey],
-		// query: request.query,
-		// header: { ...request.headers }, // TODO normalize
-		// cookie: 'TODO',
 	}
 	if (operationObject?.operationId) openapi.operationId = operationObject.operationId
+
+	// Using a Proxy here to make case-insensitive getters/setters. Note that
+	// the case is not preserved.
+	const internalHeader = {}
+	openapi.header = new Proxy(internalHeader, {
+		get: (obj, prop) => obj[prop.toLowerCase()],
+		set: (obj, prop, value) => {
+			if (value) obj[prop.toLowerCase()] = value
+			else delete obj[prop.toLowerCase()]
+			return true
+		},
+	})
 
 	const cookies = parametersToCopy.find(p => p.in === 'cookie')
 		? parse(request.headers.cookie) // TODO???
