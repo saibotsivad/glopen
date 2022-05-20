@@ -23,7 +23,7 @@ function onError(err, req, res, next) {
 	else res.end(err.message || code.toString())
 }
 
-export class Polka extends Router {
+export default class Mariachi extends Router {
 	constructor(options = {}) {
 		super()
 		this.apps = {}
@@ -53,7 +53,7 @@ export class Polka extends Router {
 					this.apps[base] = fn
 				} else {
 					let arr = this.bwares[base] || []
-					arr.length > 0 || arr.push((r, _, nxt) => (mutate(base, r),nxt()))
+					arr.length > 0 || arr.push((r, _, nxt) => (mutate(base, r), nxt()))
 					this.bwares[base] = arr.concat(fn)
 				}
 			})
@@ -63,7 +63,7 @@ export class Polka extends Router {
 
 	handler(req, res, info) {
 		info = info || this.parse(req)
-		let fns=[], arr=this.wares, obj=this.find(req.method, info.pathname)
+		let fns = [], arr = this.wares, obj = this.find(req.method, info.pathname)
 		req.originalUrl = req.originalUrl || req.url
 		let base = value(req.path = info.pathname)
 		if (this.bwares[base] !== void 0) {
@@ -73,7 +73,7 @@ export class Polka extends Router {
 			fns = obj.handlers
 			req.params = obj.params
 		} else if (this.apps[base] !== void 0) {
-			mutate(base, req); info.pathname=req.path //=> updates
+			mutate(base, req); info.pathname = req.path //=> updates
 			fns.push(this.apps[base].handler.bind(null, req, res, info))
 		}
 		fns.push(this.onNoMatch)
@@ -81,7 +81,7 @@ export class Polka extends Router {
 		req.search = info.search
 		req.query = parse(info.query)
 		// Exit if only a single function
-		let i=0, len=arr.length, num=fns.length
+		let i = 0, len = arr.length, num = fns.length
 		if (len === i && num === 1) return fns[0](req, res)
 		// Otherwise loop thru all middlware
 		let next = err => err ? this.onError(err, req, res, next) : loop()
