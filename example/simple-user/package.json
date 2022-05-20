@@ -3,7 +3,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "prepare": "glopen -c",
+    "init": "glopen -c",
     "start": "node server.js"
   },
   "dependencies": {
