@@ -12,9 +12,9 @@ class RequestParserError extends Error {
 }
 
 // https://spec.openapis.org/oas/v3.1.0#fixed-fields-9
-const ignoredHeaderNames = [ 'accept', 'content-type', 'authorization' ]
+const ignoredHeaderNames = ['accept', 'content-type', 'authorization']
 
-const parseRequest = async ({ definition, pathPatternKey, pathParametersKey, request }) => {
+export const coreRequestParser = async ({ definition, pathPatternKey, pathParametersKey, request }) => {
 
 	const path = request[pathPatternKey]
 	const parametersToCopy = {
@@ -68,30 +68,37 @@ const parseRequest = async ({ definition, pathPatternKey, pathParametersKey, req
 		},
 	})
 
-	const cookies = parametersToCopy.find(p => p.in === 'cookie')
-		? parse(request.headers.cookie) // TODO???
+	const cookies = parametersToCopy.cookie.length
+		? parse(request.headers.get('cookie'))
 		: {}
+	const searchParams = (
+		typeof request.url === 'string'
+			? new URL(`http://localhost${request.url}`)
+			: request.url
+	).searchParams
 
-	for (const parameter of parametersToCopy) {
-		if (parameter.in === 'path') {
-			openapi.path[parameter.name] = request[pathParametersKey]?.[parameter.name]
-			// TODO explode and such
-		} else if (parameter.in === 'query') {
-			// TODO explode and such
-		} else if (parameter.in === 'header') {
-			if (!ignoredHeaderNames.includes(parameter.name.toLowerCase())) {
-				openapi.header[parameter.name] = request.headers[parameter.name]
+	for (const location in parametersToCopy) {
+		for (const parameter of parametersToCopy[location]) {
+			if (parameter.in === 'path') {
+				openapi.path[parameter.name] = request[pathParametersKey]?.[parameter.name]
+				// TODO explode and such
+			} else if (parameter.in === 'query') {
+				openapi.query[parameter.name] = searchParams.get(parameter.name)
+			} else if (parameter.in === 'header') {
+				if (!ignoredHeaderNames.includes(parameter.name.toLowerCase())) {
+					openapi.header[parameter.name] = request.headers.get(parameter.name)
+				}
+			} else if (parameter.in === 'cookie') {
+				openapi.cookie[parameter.name] = cookies[parameter.name]
 			}
-		} else if (parameter.in === 'cookie') {
-			openapi.cookie[parameter.name] = cookies[parameter.name]
 		}
 	}
 
 	return openapi
 }
 
-export const requestParser = ({ definition, pathPatternKey = 'pathPattern', pathParametersKey = 'params' }) => (request, response, next) => {
-	parseRequest({ definition, pathPatternKey, pathParametersKey, request })
+export const routerRequestParser = ({ definition, pathPatternKey = 'pathPattern', pathParametersKey = 'params' }) => (request, response, next) => {
+	coreRequestParser({ definition, pathPatternKey, pathParametersKey, request })
 		.then(openapi => {
 			request.openapi = openapi
 			next()
